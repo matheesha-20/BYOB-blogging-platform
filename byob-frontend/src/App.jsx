@@ -1,7 +1,14 @@
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/navbar.component";
+
 const App = () => {
     return (
-        <h1>MERN Blogging website by modern web</h1>
-    )
-}
+        <>
+        <Navbar/>
+        <Routes>
+        </Routes>
+        </>
+    );
+};
 
 export default App;
