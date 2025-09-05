@@ -98,17 +98,35 @@
         @apply min-h-[calc(100vh-80px)];
     }
 
-    .center{
-        @apply block mx-auto;
+    .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
+
 
     .btn-dark{
         @apply whitespace-nowrap bg-black text-white rounded-full py-3 px-6 text-xl capitalize hover:bg-opacity-80;
     }
 
     .btn-light{
-        @apply btn-dark bg-grey text-black;
+        /* @apply btn-dark bg-grey text-black; */
     }
+
+    .btn-green {
+  background-color: #10b981;
+  border: 2px solid #10b981;
+  color: white;
+  padding: 1rem 1.25rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  min-width: 100px;
+  text-align: center;
+  margin-top: 3.5rem;
+}
+
+
+
 
     .input-box {
   width: 100%;    
