@@ -16,7 +16,8 @@ const userSchema = mongoose.Schema({
             type: String,
             required: true,
             lowercase: true,
-            unique: true
+            unique: true,
+            match: /.+\@.+\..+/
         },
         password: String,
         username: {
@@ -33,6 +34,7 @@ const userSchema = mongoose.Schema({
             type: String,
             default: () => {
                 return `https://api.dicebear.com/6.x/${profile_imgs_collections_list[Math.floor(Math.random() * profile_imgs_collections_list.length)]}/svg?seed=${profile_imgs_name_list[Math.floor(Math.random() * profile_imgs_name_list.length)]}`
+                //return "https://drive.google.com/uc?export=view&id=1wkR6VwfXEoXHZb0JJOBC44zKLIA7IpVf"
             } 
         },
     },
