@@ -25,6 +25,16 @@ export default {
         },
 
         extend: {
+            animation:{
+                    scan: "scan 3.5s infinite ease-in-out"
+            },
+            keyframes: {
+                scan: {
+                "0%": { transform: "translateX(-100%)" },
+                "50%": { transform: "translateX(0%)" },
+                "100%": { transform: "translateX(100%)" }
+                }
+            },
             fontFamily: {
               inter: ["'Inter'", "sans-serif"],
               gelasio: ["'Gelasio'", "serif"]
