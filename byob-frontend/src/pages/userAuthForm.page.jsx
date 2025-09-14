@@ -8,6 +8,8 @@ import axios from "axios";
 import { storeInSession } from "../common/session";
 import { useContext } from "react";
 import { UserContext } from "../App";
+import { authWithGoogle } from "../common/firebase";
+import { useNavigate } from "react-router-dom";
 
 const UserAuthForm = ({type}) => {
     
@@ -17,6 +19,35 @@ const UserAuthForm = ({type}) => {
     const access_token = userAuth?.access_token;
 
     console.log(access_token);
+
+    const navigate = useNavigate();
+
+    const handleGoogleAuth = (e) => {
+            e.preventDefault();
+
+            authWithGoogle().then(async user => {
+
+                console.log(user);
+                
+                
+                let serverRout = "/google-auth";
+
+                let formData = {
+                    access_token: user.access_token
+                }
+
+                const data =  await userAuthThroughServer(serverRout, formData);
+                    setUserAuth(data);
+                    navigate("/")
+                    toast.success(data.success || "Google login successful");
+                    
+            })
+            .catch(err => {
+                toast.error('trouble login with goolge');
+                return console.log(err);
+                
+            })
+    }
     
 
     const userAuthThroughServer = async (serverRoute, formData) => {
@@ -149,7 +180,7 @@ const UserAuthForm = ({type}) => {
                     <p>or</p>
                     <hr className="w-1/2 border-black" />
                 </div>
-                    <button className="bg-black text-emerald-500 font-semibold px-5 py-2 rounded-full border border-emerald-500 hover:bg-emerald-50 transition flex items-center justify-center gap-4 w-[65%] center">
+                    <button onClick={handleGoogleAuth} className="bg-black text-emerald-500 font-semibold px-5 py-2 rounded-full border border-emerald-500 hover:bg-emerald-50 transition flex items-center justify-center gap-4 w-[65%] center">
                             <img src={googleIcon} className="w-5" />
                             Continue With Google
                     </button>

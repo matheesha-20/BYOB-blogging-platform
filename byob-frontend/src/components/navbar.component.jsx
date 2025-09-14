@@ -6,11 +6,22 @@ import UserNavigationPanel from "./user-navigation.component"
 
 const Navbar = () => {
 
-    const [ searchBoxVisibility, setSearchBoxVisibility ] = useState(false)
+    const [ searchBoxVisibility, setSearchBoxVisibility ] = useState(false);
+    const [ userNavPanel, setUserNavPanel ] = useState(false);
 
     const { userAuth } = useContext(UserContext);
-const access_token = userAuth?.access_token;
-const profile_img = userAuth?.profile_img;
+    const access_token = userAuth?.access_token;
+    const profile_img = userAuth?.profile_img;
+
+    const handelUserNavPanel = () => {
+        setUserNavPanel(currentval => !currentval);
+    }
+
+    const handelBlur = () => {
+        setTimeout(() => {
+            setUserNavPanel(false);
+        }, 250);
+    }
 
     return (
                 
@@ -21,7 +32,6 @@ const profile_img = userAuth?.profile_img;
             <div className="md:flex space-x-8 md:relative md:block md:insert-0 md:p-0 md:w-auto">
                 <div className={"relative w-full max-w-md " + (searchBoxVisibility ? "show" : "hide")}>
                 <button 
-                    onClick="handleSearchClick()" 
                     className="absolute inset-y-0 left-0 flex items-center pl-3">
                     <i className="fas fa-search text-emerald-500 text-lg"></i>
                 </button>
@@ -49,8 +59,8 @@ const profile_img = userAuth?.profile_img;
 
                 <div className="flex space-x-6 items-center">
                 <div className="flex space-x-6 items-center">
-                    <a href="#home" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Home</a>
-                    <a href="#write" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Write</a>
+                    <a href="/src/pages/home.page.jsx" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Home</a>
+                    <a href="editor" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Write</a>
                     <a href="#trending" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Dashboard</a>
                     <a href="#profile" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Trending</a>
 
@@ -68,13 +78,17 @@ const profile_img = userAuth?.profile_img;
 
                                     </Link>
                                     
-                                    <div className="relative">
+                                    <div className="relative" tabIndex={0} onClick={handelUserNavPanel} onBlur={handelBlur}>
 
                                         <button className="w-10 h-10 mt-1">
                                             <img src={profile_img} className="w-full h-full object-cover rounded-full" />
                                         </button>
 
-                                        <UserNavigationPanel/>
+                                        {
+                                            userNavPanel ?
+                                            <UserNavigationPanel/>
+                                            : ""
+                                        }
                                         
 
                                     </div>
