@@ -2,6 +2,7 @@ import { useContext } from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { UserContext } from "../App"
+import UserNavigationPanel from "./user-navigation.component"
 
 const Navbar = () => {
 
@@ -50,8 +51,8 @@ const profile_img = userAuth?.profile_img;
                 <div className="flex space-x-6 items-center">
                     <a href="#home" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Home</a>
                     <a href="#write" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Write</a>
-                    <a href="#trending" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Trending</a>
-                    <a href="#profile" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Profile</a>
+                    <a href="#trending" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Dashboard</a>
+                    <a href="#profile" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Trending</a>
 
                     {
 
@@ -73,6 +74,7 @@ const profile_img = userAuth?.profile_img;
                                             <img src={profile_img} className="w-full h-full object-cover rounded-full" />
                                         </button>
 
+                                        <UserNavigationPanel/>
                                         
 
                                     </div>
