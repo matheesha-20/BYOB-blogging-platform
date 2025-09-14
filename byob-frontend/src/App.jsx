@@ -22,6 +22,7 @@ const App = () => {
         <Routes>
             <Route path="/signin" element={<UserAuthForm key="signin" type={"Sign-in"}/>}/>
             <Route path="/signup" element={<UserAuthForm key="signup" type={"Sign-up"}/>}/>
+            <Route path="/home"/>
         </Routes>
         </UserContext.Provider>
         
