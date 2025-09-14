@@ -23,7 +23,7 @@ const UserNavigationPanel = () => {
                                         Home
                         </Link>
 
-                        <Link to="/write" className="md:hidden link flex gap-2 text-xl text-slate-600 hover:text-emerald-600 transition">
+                        <Link to="/editor" className="md:hidden link flex gap-2 text-xl text-slate-600 hover:text-emerald-600 transition">
                                         Write
                         </Link>
 

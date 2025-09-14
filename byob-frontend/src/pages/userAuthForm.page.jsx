@@ -9,6 +9,7 @@ import { storeInSession } from "../common/session";
 import { useContext } from "react";
 import { UserContext } from "../App";
 import { authWithGoogle } from "../common/firebase";
+import { useNavigate } from "react-router-dom";
 
 const UserAuthForm = ({type}) => {
     
@@ -19,15 +20,30 @@ const UserAuthForm = ({type}) => {
 
     console.log(access_token);
 
+    const navigate = useNavigate();
+
     const handleGoogleAuth = (e) => {
             e.preventDefault();
 
-            authWithGoogle().then(user => {
+            authWithGoogle().then(async user => {
+
                 console.log(user);
                 
+                
+                let serverRout = "/google-auth";
+
+                let formData = {
+                    access_token: user.access_token
+                }
+
+                const data =  await userAuthThroughServer(serverRout, formData);
+                    setUserAuth(data);
+                    navigate("/")
+                    toast.success(data.success || "Google login successful");
+                    
             })
             .catch(err => {
-                toast.error('trouble login wiht goolge');
+                toast.error('trouble login with goolge');
                 return console.log(err);
                 
             })

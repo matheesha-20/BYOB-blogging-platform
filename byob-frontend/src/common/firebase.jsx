@@ -12,22 +12,20 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-const Provider = new GoogleAuthProvider();
-
 const auth = getAuth();
 
 export const authWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  const result = await signInWithPopup(auth, provider);
+  const user = result.user;
+  const idToken = await user.getIdToken(); 
 
-        let user = null;
-
-        await signInWithPopup(auth, Provider)
-        .then((result) => {
-            user = result.user
-        })
-        .catch((err) => {
-            console.log(err);
-            
-        })
-
-        return user;
-}
+  return {
+    access_token: idToken,
+    profile: {
+      email: user.email,
+      name: user.displayName,
+      picture: user.photoURL
+    }
+  };
+};

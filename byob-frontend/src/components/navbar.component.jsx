@@ -32,7 +32,6 @@ const Navbar = () => {
             <div className="md:flex space-x-8 md:relative md:block md:insert-0 md:p-0 md:w-auto">
                 <div className={"relative w-full max-w-md " + (searchBoxVisibility ? "show" : "hide")}>
                 <button 
-                    onClick="handleSearchClick()" 
                     className="absolute inset-y-0 left-0 flex items-center pl-3">
                     <i className="fas fa-search text-emerald-500 text-lg"></i>
                 </button>
@@ -61,7 +60,7 @@ const Navbar = () => {
                 <div className="flex space-x-6 items-center">
                 <div className="flex space-x-6 items-center">
                     <a href="/src/pages/home.page.jsx" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Home</a>
-                    <a href="#write" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Write</a>
+                    <a href="editor" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Write</a>
                     <a href="#trending" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Dashboard</a>
                     <a href="#profile" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Trending</a>
 
