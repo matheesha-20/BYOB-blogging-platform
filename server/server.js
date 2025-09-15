@@ -10,6 +10,7 @@ import cors from 'cors';
 import admin from "firebase-admin";
 import serviceAccountKey  from "./byob-blogging-web-firebase-adminsdk-fbsvc-8f30cff93a.json" with { type: "json"};
 import { getAuth } from "firebase-admin/auth";
+import aws from "aws-sdk";
 
 
 
@@ -34,12 +35,17 @@ mongoose.connect(process.env.DB_LOCATION)
   .then(async () => {
     console.log("Connected to MongoDB");
     await User.init();
-    //await YourModel.init();
   })
   .catch((err) => {
     console.error("MongoDB connection error:", err);
     process.exit(1);
   });
+
+const s3 = new aws.S3({
+    region: 'eu-north-1',
+    accessKeyId: process.env.AWS_ACCESS_KEY ,
+    secretAccessKey: process.env.AWS_SERET_ACCESS_KEY
+})
 
 
 
