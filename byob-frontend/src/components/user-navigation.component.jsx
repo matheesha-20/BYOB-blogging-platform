@@ -20,7 +20,7 @@ const UserNavigationPanel = () => {
                     <div className="bg-white abosolute  right-0 border border-gray-300 w-60 p-2  duration-200 translate-x-full animate-slide-in">
    
                         <Link to="/home" className="md:hidden link flex gap-2 text-xl text-slate-600 hover:text-emerald-600 transition">
-                                        Home
+                                        
                         </Link>
 
                         <Link to="/editor" className="md:hidden link flex gap-2 text-xl text-slate-600 hover:text-emerald-600 transition">
