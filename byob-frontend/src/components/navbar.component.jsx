@@ -59,8 +59,8 @@ const Navbar = () => {
 
                 <div className="flex space-x-6 items-center">
                 <div className="flex space-x-6 items-center">
-                    <a href="/src/pages/home.page.jsx" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Home</a>
-                    <a href="editor" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Write</a>
+                    <a href="/home" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Home</a>
+                    <a href="/editor" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Write</a>
                     <a href="#trending" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Dashboard</a>
                     <a href="#profile" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Trending</a>
 
