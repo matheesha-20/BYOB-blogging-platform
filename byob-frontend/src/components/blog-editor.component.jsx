@@ -10,15 +10,15 @@ import { tools } from "./tools.component";
 
 const BlogEditor = () => {
 
-    let {blog, blog:{ title, banner, content, tags, des}, setBlog} = useContext(EditorContext)
+    let {blog, blog:{ title, banner, content, tags, des}, setBlog, textEditor, setTextEditor} = useContext(EditorContext)
 
     useEffect(() => {
-        let editor = new EditorJS({
+        setTextEditor(new EditorJS({
             holderId: "blogwriter",
             data: '',
             tools: tools,
             placeholder: "Let's write Your Awesome Blog!"
-        })
+        }))
     }, [])
 
     const handleBannerUpload = (e) => {
@@ -61,10 +61,16 @@ const BlogEditor = () => {
         setBlog({ ...blog, title: input.value })
     }
 
-    const handleError= (e) => {
+    const handleError = (e) => {
         let img = e.target;
 
         img.src = defaultBanner;
+    }
+
+    const handlePublishEvent = () => {
+        if (!banner.length) {
+            return toast.error("Upload a blog banner to publish!");
+        }
     }
 
     return (
@@ -81,12 +87,13 @@ const BlogEditor = () => {
                     <a href="#trending" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Dashboard</a>
                     <a href="#profile" className="hidden md:block text-xl text-slate-600 hover:text-emerald-600 transition">Trending</a> */}
                     
-                    <Link to="/signup">
-                                            <button className="bg-emerald-600 text-white font-semibold px-5 py-1 rounded-full hover:bg-emerald-600 transition min-w-[100px] text-center">
+                    <Link to="">
+                                            <button className="bg-emerald-600 text-white font-semibold px-5 py-1 rounded-full hover:bg-emerald-600 transition min-w-[100px] text-center"
+                                                    onClick={handlePublishEvent}>
                                                 Publish
                                             </button>
                     </Link>
-                    <Link to="/signin">
+                    <Link to="">
                                         <button className="bg-white text-emerald-500 font-semibold px-5 py-1 rounded-full border border-emerald-600 hover:bg-emerald-50 transition min-w-[100px] text-center">
                                             Save Draft
                                         </button>
