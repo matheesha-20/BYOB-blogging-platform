@@ -71,6 +71,20 @@ const BlogEditor = () => {
         if (!banner.length) {
             return toast.error("Upload a blog banner to publish!");
         }
+        if (!title.length) {
+            return toast.error("Add a title before publish!");
+        }
+        if (textEditor.isReady) {
+            textEditor.save()
+            .then((outputData) => {
+                setBlog({ ...blog, content: outputData.blocks })
+            })
+            .catch((error) => {
+                console.log("Saving failed: ", error) });
+        }
+        if (condition) {
+            
+        }
     }
 
     return (
