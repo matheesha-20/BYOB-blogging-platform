@@ -10,7 +10,7 @@ import { tools } from "./tools.component";
 
 const BlogEditor = () => {
 
-    let {blog, blog:{ title, banner, content, tags, des}, setBlog, textEditor, setTextEditor} = useContext(EditorContext)
+    let {blog, blog:{ title, banner, content, tags, des}, setBlog, textEditor, setTextEditor, setEditorState} = useContext(EditorContext)
 
     useEffect(() => {
         setTextEditor(new EditorJS({
@@ -77,13 +77,16 @@ const BlogEditor = () => {
         if (textEditor.isReady) {
             textEditor.save()
             .then((outputData) => {
-                setBlog({ ...blog, content: outputData.blocks })
+                if (outputData.blocks.length) {
+                    setBlog({ ...blog, content: outputData.blocks })
+                    setEditorState("publish")
+                }
+                else{
+                    return toast.error("Write something in your blog before publish!")
+                }
             })
             .catch((error) => {
                 console.log("Saving failed: ", error) });
-        }
-        if (condition) {
-            
         }
     }
 
