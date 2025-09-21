@@ -141,11 +141,13 @@ const BlogEditor = () => {
                     </div>
                     <br />
 
-                    <textarea placeholder="Blog Title"
+                    <textarea 
+                              defaultValue={title}
+                              placeholder="Blog Title"
                               className="bg-stone-100 text-3xl md:text-5xl font-bold mb-4 py-10 outline-none resize-none mt-10 leading-tight placeholder:opacity-50"
                               onKeyDown={handleTitleKeyDown}
                               onChange={handleTitleChange}
-                              name="" id="">
+                    >
 
                     </textarea>
 
