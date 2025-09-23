@@ -264,6 +264,18 @@
   animation: slide-in 0.3s ease-out forwards;
 }
 
+.vertical-line {
+  width: 1px;
+  height: 500px;
+  background-color: #8f8d8d;
+  margin: 0 20px;
+}
+
+.container {
+  display: flex;
+}
+
+
 
 
 }

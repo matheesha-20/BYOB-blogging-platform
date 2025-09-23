@@ -15,7 +15,7 @@ const BlogEditor = () => {
     useEffect(() => {
         setTextEditor(new EditorJS({
             holderId: "blogwriter",
-            data: '',
+            data: content,
             tools: tools,
             placeholder: "Let's write Your Awesome Blog!"
         }))
@@ -79,6 +79,8 @@ const BlogEditor = () => {
             .then((outputData) => {
                 if (outputData.blocks.length) {
                     setBlog({ ...blog, content: outputData.blocks })
+                    console.log(content);
+                    
                     setEditorState("publish")
                 }
                 else{
