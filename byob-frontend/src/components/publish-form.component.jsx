@@ -87,12 +87,13 @@ const PublishForm = () => {
 
                     <p className="mt-1 text-dark-grey text-sm text-right">{characterLimit - (description?.length || 0)} characters left</p>
 
-                    <p className="mb-5 pr-4 py-2  text-emerald-500 placeholder-emerald-500 hover:placeholder-slate-500 hover:text-slate-500 focus:text-slate-500 transition duration-300">
+                    <p className="mb-3 pr-4 py-2  text-emerald-500 placeholder-emerald-500 hover:placeholder-slate-500 hover:text-slate-500 focus:text-slate-500 transition duration-300">
                         Tags -
                     </p>
 
-                    <div className="relative input-box pl-2 py-2 pb-4">
-                        
+                    <div className="input-box relative pl-2 py-2 pb-4">
+                        <input type="text" placeholder="Topic" className="sticky input-box placeholder-slate-500 top-0 left-0 pl-4 mb-3" />
+                        <tags tags="testing tag"/>
 
                     </div>
                     
