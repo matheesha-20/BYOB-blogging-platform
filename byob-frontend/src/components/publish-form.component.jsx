@@ -38,18 +38,18 @@ const PublishForm = () => {
                     
                     <div className="border-dark-grey lg:border-1 lg:pl-10 text-2xl text-bold mt-12">
 
-                    <p>
-                        Blog Title - 
+                    <p className="mb-5 pr-4 py-2 bg-transparent text-emerald-500 placeholder-emerald-500 hover:placeholder-slate-500 hover:text-slate-500 focus:text-slate-500 transition duration-300">
+                        Blog Title -
                     </p>
 
-                    <input className="mb-5 pl-10 pr-4 py-2 bg-transparent text-emerald-500 placeholder-emerald-500 hover:placeholder-slate-500 hover:text-slate-500 focus:text-slate-500 transition duration-300" type="text" placeholder="Blog Title" 
+                    <input className="mb-5 pl-10 pr-4 py-2 bg-transparent text-slate-500" type="text" placeholder="Blog Title" 
                     defaultValue={title}/>
 
-                    <p className="">
-                        Description - 
+                    <p className="mb-5 pr-4 py-2 bg-transparent text-emerald-500 placeholder-emerald-500 hover:placeholder-slate-500 hover:text-slate-500 focus:text-slate-500 transition duration-300">
+                        Desrciption -
                     </p>
 
-                    <input className="mb-5 pl-10 pr-4 py-2 bg-transparent text-emerald-500 placeholder-emerald-500 hover:placeholder-slate-500 hover:text-slate-500 focus:text-slate-500 transition duration-300" type="text" placeholder="Blog Title" 
+                    <input className="mb-5 pl-10 pr-4 py-2 bg-transparent text-slate-500" type="text" placeholder="Blog Title" 
                     defaultValue={title}/>
                     
                     

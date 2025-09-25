@@ -78,9 +78,7 @@ const BlogEditor = () => {
             textEditor.save()
             .then((outputData) => {
                 if (outputData.blocks.length) {
-                    setBlog({ ...blog, content: outputData.blocks })
-                    console.log(content);
-                    
+                    setBlog({ ...blog, content: outputData })
                     setEditorState("publish")
                 }
                 else{
