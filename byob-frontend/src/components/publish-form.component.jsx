@@ -2,6 +2,7 @@ import { useContext } from "react";
 import AnimationWrapper from "../common/page-animation";
 import { Toaster, toast } from "react-hot-toast";
 import { EditorContext } from "../pages/editor.pages";
+import Tags from "./tags.component";
 
 const PublishForm = () => {
 
@@ -91,9 +92,10 @@ const PublishForm = () => {
                         Tags -
                     </p>
 
-                    <div className="input-box relative pl-2 py-2 pb-4">
-                        <input type="text" placeholder="Topic" className="sticky input-box placeholder-slate-500 top-0 left-0 pl-4 mb-3" />
-                        <tags tags="testing tag"/>
+                    <div className="relative big-input-box pl-2 py-2 pb-4">
+
+                        <input type="text" placeholder="Topic" className="sticky small-input-box placeholder-slate-500 top-0 left-0 pl-4 mb-3" />
+                        <Tags tags="testing tag"/>
 
                     </div>
                     
