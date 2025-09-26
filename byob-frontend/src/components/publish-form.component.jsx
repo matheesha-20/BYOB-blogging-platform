@@ -113,7 +113,7 @@ const PublishForm = () => {
 
                     <div className="relative big-input-box pl-2 py-2 pb-4 h-auto">
 
-                        <input type="text" placeholder="Topic" className="sticky small-input-box placeholder-slate-500 top-0 left-0 pl-4 mb-3" 
+                        <input type="text" placeholder="Topic" className="sticky small-input-box placeholder-slate-500 top-0 left-0 pl-4 mb-3 ml-2" 
                             onKeyDown={handleKeyDown}
                         />
                         { tags.map ((tag, i) => {
@@ -121,12 +121,25 @@ const PublishForm = () => {
 
                         })}
 
+                        <p className="mt-1 text-dark-grey text-sm text-right">{ tagLimit - tags.length } Tags left</p>
+
                     </div>
+
                     
+                    
+
                     <p className="mt-1 text-dark-grey text-sm text-right"> ( Helps for searching and ranking your blog post) </p>
                     
                 </div>
+
                 </div>
+
+                <div className="flex justify-center mt-8">
+                    <button className="px-8 btn-dark bg-slate-800 text-emerald-500">
+                        Publish
+                    </button>
+                </div>
+
 
                 
 
