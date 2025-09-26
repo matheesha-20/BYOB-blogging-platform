@@ -7,6 +7,7 @@ import Tags from "./tags.component";
 const PublishForm = () => {
 
     let characterLimit = 200;
+    let tagLimit = 10;
 
     let { blog, blog: {banner, title, tags, description, content}, setEditorState, setBlog } = useContext(EditorContext);
 
@@ -32,6 +33,24 @@ const PublishForm = () => {
             e.preventDefault();
         }
 
+    }
+
+    const handleKeyDown = (e) => {
+        if (e.keyCode == 13  || e.keyCode == 188) {
+            e.preventDefault();
+
+            let tag = e.target.value;
+
+            if (tags.length < tagLimit) {
+                if (!tags.includes(tag) && tag.length) {
+                    setBlog({ ...blog, tags: [ ...tags, tag]})
+                }
+            }else{
+                toast.error(`You Can Only Add ${tagLimit} Tags`)
+            }
+
+            e.target.value = "";
+        }
     }
 
     return (
@@ -92,14 +111,19 @@ const PublishForm = () => {
                         Tags -
                     </p>
 
-                    <div className="relative big-input-box pl-2 py-2 pb-4">
+                    <div className="relative big-input-box pl-2 py-2 pb-4 h-auto">
 
-                        <input type="text" placeholder="Topic" className="sticky small-input-box placeholder-slate-500 top-0 left-0 pl-4 mb-3" />
-                        <Tags tags="testing tag"/>
+                        <input type="text" placeholder="Topic" className="sticky small-input-box placeholder-slate-500 top-0 left-0 pl-4 mb-3" 
+                            onKeyDown={handleKeyDown}
+                        />
+                        { tags.map ((tag, i) => {
+                            return <Tags tag={tag} key={i}/>
+
+                        })}
 
                     </div>
                     
-                    <p className="mt-1 text-dark-grey text-sm text-left"> ( Helps for searching and ranking your blog post) </p>
+                    <p className="mt-1 text-dark-grey text-sm text-right"> ( Helps for searching and ranking your blog post) </p>
                     
                 </div>
                 </div>
