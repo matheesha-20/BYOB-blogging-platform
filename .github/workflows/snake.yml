@@ -12,7 +12,7 @@ jobs:
       - name: Generate Snake SVG
         uses: Platane/snk@v3
         with:
-          github_user_name: YOUR_USERNAME
+          github_user_name: matheesha-20
           outputs: |
             dist/github-contribution-grid-snake.svg
 
