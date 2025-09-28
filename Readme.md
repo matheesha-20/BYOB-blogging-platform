@@ -44,14 +44,15 @@ byob-blogging-website/ ├── byob-frontend/ # React frontend (Vite, Tailwind
 
 #### 2. frontend
 1. Copy `byob-frontend/.env.example` to `byob-frontend/.env` and set `VITE_SERVER_DOMAIN` to your backend URL (e.g., http://localhost:5000).
-2. Install dependencies and start the frontend:
+2. Install dependencies:
     ```sh
    cd byob-frontend
    npm install
-
+3. Start the frontend:
+   ```sh
    npm run dev
 
-3. Open http://localhost:5173 in your browser
+4. Open http://localhost:5173 in your browser
 
 Environment Variables
 Backend (server/.env):
