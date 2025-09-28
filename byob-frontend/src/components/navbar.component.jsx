@@ -42,7 +42,7 @@ const Navbar = () => {
                                 className="w-full pl-12 pr-4 py-2 bg-transparent text-slate-600 placeholder-emerald-500 focus:placeholder-slate-400 hover:text-emerald-600 border-none focus:outline-none transition duration-300 hover:text-emerald-600 focus:text-emerald-500"
                             />
                             
-                            <div className="absolute bottom-0 left-0 w-full h-[2px] bg-slate-700 opacity-40"></div>
+                            <div className="absolute bottom-0 left-0 w-full h-[2px] bg-slate-800 opacity-40"></div>
 
                             <div className="absolute bottom-0 left-0 w-full h-[6px] overflow-hidden">
                                 <div className="w-full h-full bg-gradient-to-r from-transparent via-emerald-600 to-transparent animate-scan">  
