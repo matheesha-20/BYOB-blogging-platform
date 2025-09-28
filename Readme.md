@@ -16,6 +16,7 @@ Build Your Own Blog (BYOB) is a full-stack blogging platform that enables users 
 
 ## Project Structure
 
+byob-blogging-website/ ├── byob-frontend/ # React frontend (Vite, Tailwind, Editor.js) │ ├── src/ │ ├── index.html │ └── package.json ├── server/ # Node.js/Express backend │ ├── Schema/ │ ├── server.js │ └── package.json ├── test/ # Test HTML and assets ├── .gitignore └── Readme.md
 
 ## Getting Started
 
