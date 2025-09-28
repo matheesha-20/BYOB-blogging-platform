@@ -232,23 +232,38 @@
 
 @keyframes scan {
   0% {
-    transform: translateX(-100%);
+    right: translateX(-100%);
   }
-  50% {
-    transform: translateX(0%);
-  }
+  
   100% {
-    transform: translateX(100%);
+    left: translateX(100%);
   }
 }
 
 .animate-scan {
+  position: absolute;
+  width: 50%;
+  height: 100;
+  background: linear-gradient(to right, transparent, #10b981, transparent);
   animation: scan 5s infinite ease-in-out;
-  box-shadow: 0 0 12px #079767, 0 0 24px #0f875f;
+  box-shadow: 0 0 20px #419438, 0 0 30px #46963d;
 }
 
 .search-input {
-  @apply w-full pl-10 pr-4 py-2 bg-transparent text-slate-600 border-b-2 border-emerald-500 focus:outline-none focus:border-emerald-600 transition duration-300;
+  width: 100%;
+  padding-left: 2.5rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: transparent;
+  color: #475569;
+  border-bottom: 2px solid #10b981;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-bottom-color: #059669;
 }
 
 @keyframes slide-in {
@@ -261,6 +276,10 @@
 }
 
 .animate-slide-in {
+  animation: slide-in 0.3s ease-out forwards;
+}
+
+.animate-slide-out {
   animation: slide-in 0.3s ease-out forwards;
 }
 

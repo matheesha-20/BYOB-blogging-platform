@@ -114,6 +114,7 @@ const BlogEditor = () => {
                                         <button className="bg-white text-emerald-500 font-semibold px-5 py-1 rounded-full border border-emerald-600 hover:bg-emerald-50 transition min-w-[100px] text-center">
                                             Save Draft
                                         </button>
+                                        
                     </Link>
                 </div>
             </nav>

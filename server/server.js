@@ -242,6 +242,12 @@ server.post("/google-auth", async (req, res) => {
 
 })
 
+server.post('/create-blog', (req, res) => {
+
+    return res.json(req.body)
+    
+})
+
 server.listen(PORT, '0.0.0.0', () => {
   console.log("Listening on port " + PORT);
 });

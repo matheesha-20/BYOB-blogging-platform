@@ -32,20 +32,20 @@ const Navbar = () => {
             <div className="md:flex space-x-8 md:relative md:block md:insert-0 md:p-0 md:w-auto">
                 <div className={"relative w-full max-w-md " + (searchBoxVisibility ? "show" : "hide")}>
                 <button 
-                    className="absolute inset-y-0 left-0 flex items-center pl-3">
+                    className="absolute inset-y-0 left-0 flex items-center pl-3 mb-2">
                     <i className="fas fa-search text-emerald-500 text-lg"></i>
                 </button>
                        <div className="relative w-full max-w-md">
                             <input
                                 type="text"
                                 placeholder="Search"
-                                className="w-full pl-10 pr-4 py-2 bg-transparent text-slate-600 placeholder-emerald-500 focus:placeholder-slate-400 hover:text-emerald-600 border-none focus:outline-none transition duration-300 hover:text-emerald-600 focus:text-emerald-500"
+                                className="w-full pl-12 pr-4 py-2 bg-transparent text-slate-600 placeholder-emerald-500 focus:placeholder-slate-400 hover:text-emerald-600 border-none focus:outline-none transition duration-300 hover:text-emerald-600 focus:text-emerald-500"
                             />
                             
-                            <div className="absolute bottom-0 left-0 w-full h-[2px] bg-emerald-500 opacity-30"></div>
+                            <div className="absolute bottom-0 left-0 w-full h-[2px] bg-slate-800 opacity-40"></div>
 
-                            <div className="absolute bottom-0 left-0 w-full h-[3px] overflow-hidden">
-                                <div className="w-full h-full bg-gradient-to-r from-transparent via-emerald-400 to-transparent animate-scan">  
+                            <div className="absolute bottom-0 left-0 w-full h-[6px] overflow-hidden">
+                                <div className="w-full h-full bg-gradient-to-r from-transparent via-emerald-600 to-transparent animate-scan">  
                                 </div>
                             </div>
                         </div>

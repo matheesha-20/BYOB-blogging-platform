@@ -73,17 +73,17 @@ const PublishForm = () => {
                     <h1 className="text-left text-4xl md:text-5xl font-bold mb-4 py-10 mt-2 leading-tight line-clamp-2">
                          {title} 
                     </h1>
-                    <p className="font-gelasio line-clamp-2 text-xl leading-7 mt-4">
+                    <p className="font-gelasio line-clamp-2 text-xl leading-7 mt-4 mb-20">
                         {description}
                     </p>
 
                 </div>
 
-                <div className="container mt-5">
+                <div className="container">
 
                     <div className="vertical-line hidden md:block"></div>
                     
-                    <div className="border-dark-grey lg:border-1 lg:pl-10 text-2xl text-bold mt-12">
+                    <div className="border-dark-grey lg:border-1 lg:pl-10 text-2xl text-bold mt-10">
 
                     <p className="mb-5 pr-4 py-2  text-emerald-500 placeholder-emerald-500 hover:placeholder-slate-500 hover:text-slate-500 focus:text-slate-500 transition duration-300">
                         Blog Title -
@@ -128,16 +128,16 @@ const PublishForm = () => {
                     
                     
 
-                    <p className="mt-1 text-dark-grey text-sm text-right"> ( Helps for searching and ranking your blog post) </p>
+                    <p className="mt-1 text-dark-grey text-sm text-right mb-20"> ( Helps for searching and ranking your blog post) </p>
+
+                    <div className="flex justify-center mt-8">
+                            <button className="mt-5 px-8 btn-dark bg-slate-800 text-emerald-500">
+                                Publish
+                            </button>
+                    </div>
                     
                 </div>
-
-                </div>
-
-                <div className="flex justify-center mt-8">
-                    <button className="px-8 btn-dark bg-slate-800 text-emerald-500">
-                        Publish
-                    </button>
+                
                 </div>
 
 
