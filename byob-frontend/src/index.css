@@ -106,7 +106,7 @@
 
 
     .btn-dark{
-        @apply whitespace-nowrap bg-black text-white rounded-full py-3 px-6 text-xl capitalize hover:bg-opacity-80;
+        @apply whitespace-nowrap rounded-full py-3 px-6 text-xl capitalize hover:bg-opacity-80;
     }
 
     .btn-light{
@@ -232,23 +232,38 @@
 
 @keyframes scan {
   0% {
-    transform: translateX(-100%);
+    right: translateX(-100%);
   }
-  50% {
-    transform: translateX(0%);
-  }
+  
   100% {
-    transform: translateX(100%);
+    left: translateX(100%);
   }
 }
 
 .animate-scan {
+  position: absolute;
+  width: 50%;
+  height: 100;
+  background: linear-gradient(to right, transparent, #10b981, transparent);
   animation: scan 5s infinite ease-in-out;
-  box-shadow: 0 0 12px #079767, 0 0 24px #0f875f;
+  box-shadow: 0 0 20px #419438, 0 0 30px #46963d;
 }
 
 .search-input {
-  @apply w-full pl-10 pr-4 py-2 bg-transparent text-slate-600 border-b-2 border-emerald-500 focus:outline-none focus:border-emerald-600 transition duration-300;
+  width: 100%;
+  padding-left: 2.5rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: transparent;
+  color: #475569;
+  border-bottom: 2px solid #10b981;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-bottom-color: #059669;
 }
 
 @keyframes slide-in {
@@ -264,6 +279,74 @@
   animation: slide-in 0.3s ease-out forwards;
 }
 
+.animate-slide-out {
+  animation: slide-in 0.3s ease-out forwards;
+}
+
+.vertical-line {
+  width: 1px;
+  height: 700px;
+  background-color: #8f8d8d;
+  margin: 0 20px;
+}
+
+.container {
+  display: flex;
+}
+
+.big-input-box {
+  width: 100%;
+  height: 130px; /* taller than the original */
+  background-color: rgba(255, 255, 255, 0.9); /* lightly visible */
+  border: 2px solid #d1d5db; /* emerald border */
+  padding: 1.5rem;
+  padding-left: 3%;
+  border-radius: 0.5rem;
+  font-size: 1.0rem; /* slightly larger text */
+  color: #10b981; /* emerald text */
+  outline: none;
+  transition: border-color 0.3s ease, color 0.3s ease;
+  resize: none; /* optional: disable resizing */
+}
+
+.big-input-box::placeholder {
+  color: #10b981;
+  transition: color 0.3s ease;
+}
+
+.big-input-box:focus {
+  border-color: #6b7280; /* gray on focus */
+  color: #6b7280;
+}
+
+.big-input-box:focus::placeholder {
+  color: #6b7280;
+}
+
+
+.small-input-box {
+  width: 100%;
+  height: 40px; /* taller than the original */
+  background-color: rgba(255, 255, 255, 0.9); /* lightly visible */
+  border: 1px solid #d1d5db; /* emerald border */
+  padding: 1.5rem;
+  padding-left: 3rem;
+  border-radius: 0.5rem;
+  font-size: 1.2rem; /* slightly larger text */
+  color: #111827; /* emerald text */
+  outline: none;
+  transition: border-color 0.3s ease, color 0.3s ease;
+  resize: none;
+}
+
+.small-input-box::placeholder {
+  color: #6b7280;         /* Tailwind's slate-500 gray */
+}
+
+.small-input-box:focus {
+  border-color: #10b981; /* gray on focus */
+  color: #10b981;
+}
 
 
 }

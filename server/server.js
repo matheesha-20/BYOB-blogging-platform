@@ -44,8 +44,20 @@ mongoose.connect(process.env.DB_LOCATION)
 const s3 = new aws.S3({
     region: 'eu-north-1',
     accessKeyId: process.env.AWS_ACCESS_KEY ,
-    secretAccessKey: process.env.AWS_SERET_ACCESS_KEY
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 })
+
+const generateUploadUrl = async () => {
+    const date = new Date();
+    const imageName = `${nanoid()}-${date.getTime()}.jpeg`;
+
+    return await s3.getSignedUrlPromise('putObject', {
+      Bucket: 'byob-blogging-web',
+      Key: imageName,
+      Expires: 1000,
+      ContentType: "image/jpeg"
+    })
+}
 
 
 
@@ -70,6 +82,14 @@ const fromatDatatosend = (user) => {
 
     return username;
   }
+
+server.get('/get-upload-url', (req, res) => {
+  generateUploadUrl().then(url => res.status(200).json({ uploadURL:url}))
+  .catch(err => {
+    console.log(err.message);
+    return res.status(500).json({error:err.message})
+  })
+})
 
 server.post("/signup", (req, res) => {
 
@@ -220,6 +240,12 @@ server.post("/google-auth", async (req, res) => {
         return res.status(500).json({"error": "Failed to authenticate you with google. Try with different account!"})
     })
 
+})
+
+server.post('/create-blog', (req, res) => {
+
+    return res.json(req.body)
+    
 })
 
 server.listen(PORT, '0.0.0.0', () => {

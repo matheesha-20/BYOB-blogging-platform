@@ -1,8 +1,6 @@
-POST http://localhost:3000/signup
+POST http://localhost:3000/create-blog
 Content-Type: application/json
 
 {
-    "fullname": "madkk",
-    "email": "matheeshakavindu23@gmail.com",
-    "password": "Matheesha32"
+    "blog-name": "this is a test blog"
 }
