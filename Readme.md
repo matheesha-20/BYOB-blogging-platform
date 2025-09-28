@@ -37,14 +37,17 @@ byob-blogging-website/ ├── byob-frontend/ # React frontend (Vite, Tailwind
    ```sh
    cd server
    npm install
-3. npm start
 
+3. Start the backend server:
+        npm start
+
+4.Start the frontend:
    cd byob-frontend
-    npm install
+   npm install
 
-    npm run dev
+   npm run dev
 
-4.Open http://localhost:5173 in your browser
+5.Open http://localhost:5173 in your browser
 
 Environment Variables
 Backend (server/.env):
