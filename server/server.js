@@ -262,9 +262,9 @@ server.post("/google-auth", async (req, res) => {
 
 server.post('/create-blog', verifyJWT, (req, res) => {
 
-    let authorId = req.user;
+    let author = req.user;
 
-    let { title = '', banner = '', content = '', des = '', tags = [], draft = false } = req.body;
+    let { title = '', banner = '', content = '', des = '', tags = [], draft } = req.body;
 
     tags = tags.map(tag => tag.toLowerCase());
 
@@ -294,16 +294,25 @@ server.post('/create-blog', verifyJWT, (req, res) => {
     }
 
     let blog = new Blog({
-        title, banner, content, des, tags, authorId, blog_id: blogId, draft: Boolean(draft)
+        title, banner, content, des, tags, author, blog_id: blogId, draft: Boolean(draft)
     })
-    
-    blog.save().then(b => {
-        return res.status(200).json({"status": "Blog published successfully", blogId: b.blog_id})
-    })
-    .catch(err => {
-        console.log(err.message);
-        return res.status(500).json({"error": err.message
-    })
+
+    blog.save().then(async b => {
+  try {
+    let incrementVal = draft ? 0 : 1;
+    await User.findOneAndUpdate(
+      { _id: author },
+      {
+        $inc: { "account_info.total_posts": incrementVal },
+        $push: { blogs: b._id }
+      }
+    );
+    return res.status(200).json({ id: b.blog_id });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({ error: err.message });
+  }
+});
     
 
 })
