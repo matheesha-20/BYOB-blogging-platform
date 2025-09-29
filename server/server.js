@@ -5,12 +5,13 @@ dotenv.config();
 import bcrypt from 'bcrypt';
 import User from './Schema/User.js';
 import { nanoid } from 'nanoid';
-import jwt, { verify }  from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import cors from 'cors';
 import admin from "firebase-admin";
 import serviceAccountKey  from "./byob-blogging-web-firebase-adminsdk-fbsvc-8f30cff93a.json" with { type: "json"};
 import { getAuth } from "firebase-admin/auth";
 import aws from "aws-sdk";
+import Blog from './Schema/Blog.js';
 
 
 
@@ -261,7 +262,49 @@ server.post("/google-auth", async (req, res) => {
 
 server.post('/create-blog', verifyJWT, (req, res) => {
 
-    return res.json(req.body)
+    let authorId = req.user;
+
+    let { title = '', banner = '', content = '', des = '', tags = [], draft = false } = req.body;
+
+    tags = tags.map(tag => tag.toLowerCase());
+
+    let blogId = title.replace(/[^a-zA-Z0-9]/g, ' ').replace(/\s+/g, '-').trim() + nanoid();
+
+    if(!title.length){
+        return res.status(403).json({"error": "You must provide a title to publish the blog"})
+    }
+    if(!banner.length){
+        return res.status(403).json({"error": "You must provide a banner to publish the blog"})
+    }
+    if(!content.length){
+        return res.status(403).json({"error": "You must provide content to publish the blog"})
+    }
+    if(!des.length){
+        return res.status(403).json({"error": "You must provide a description to publish the blog"})
+    }
+    if(!tags.length){
+        return res.status(403).json({"error": "You must provide atleast one tag to publish the blog"})
+    }
+    if(tags.length > 10){
+        return res.status(403).json({"error": "You can provide maximum of 10 tags"})
+    }
+    if(draft && draft == true){
+        //save as draft
+        return res.status(200).json({"status": "Blog saved as draft successfully"})
+    }
+
+    let blog = new Blog({
+        title, banner, content, des, tags, authorId, blog_id: blogId, draft: Boolean(draft)
+    })
+    
+    blog.save().then(b => {
+        return res.status(200).json({"status": "Blog published successfully", blogId: b.blog_id})
+    })
+    .catch(err => {
+        console.log(err.message);
+        return res.status(500).json({"error": err.message
+    })
+    
 
 })
 

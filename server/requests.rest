@@ -1,6 +1,20 @@
 POST http://localhost:3000/create-blog
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZGFjNDcxOGViMjBkMDYyNmI1ZTMyYSIsImlhdCI6MTc1OTE3MjQyNX0.hbMxR7NadBKw4yNZuQ3XPXk9oSPWT5WYT-D8yXcaZYE
 
 {
-    "blog-name": "this is a test blog"
+    "title": "###",
+    "banner": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+    "content": "this is a test blog content",
+    "des": "this is a test blog description",
+    "tags": ["test", "blog"],
+    "draft": false
 }
+
+# POST http://localhost:3000/signin
+# Content-Type: application/json
+
+# {
+#     "email": "test@testmail.com",
+#     "password": "Testpassword12345"
+# }
