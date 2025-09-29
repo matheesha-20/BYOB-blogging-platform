@@ -5,7 +5,7 @@ dotenv.config();
 import bcrypt from 'bcrypt';
 import User from './Schema/User.js';
 import { nanoid } from 'nanoid';
-import jwt  from 'jsonwebtoken';
+import jwt, { verify }  from 'jsonwebtoken';
 import cors from 'cors';
 import admin from "firebase-admin";
 import serviceAccountKey  from "./byob-blogging-web-firebase-adminsdk-fbsvc-8f30cff93a.json" with { type: "json"};
@@ -56,6 +56,23 @@ const generateUploadUrl = async () => {
       Key: imageName,
       Expires: 1000,
       ContentType: "image/jpeg"
+    })
+}
+
+const verifyJWT = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(" ")[1];
+
+    if(token == null){
+        return res.status(401).json({"error": "No access token"});
+    }
+
+    jwt.verify(token, process.env.SECRET_ACCESS_KEY, (err, user) => {
+        if(err){
+            return res.status(403).json({"error": "Access token is invalid"});
+        }
+        req.user = user.id;
+        next();
     })
 }
 
@@ -242,10 +259,10 @@ server.post("/google-auth", async (req, res) => {
 
 })
 
-server.post('/create-blog', (req, res) => {
+server.post('/create-blog', verifyJWT, (req, res) => {
 
     return res.json(req.body)
-    
+
 })
 
 server.listen(PORT, '0.0.0.0', () => {
