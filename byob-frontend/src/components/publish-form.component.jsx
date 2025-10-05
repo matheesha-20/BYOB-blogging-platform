@@ -3,11 +3,18 @@ import AnimationWrapper from "../common/page-animation";
 import { Toaster, toast } from "react-hot-toast";
 import { EditorContext } from "../pages/editor.pages";
 import Tags from "./tags.component";
+import axios from "axios";
+import { UserContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 const PublishForm = () => {
 
     let characterLimit = 200;
     let tagLimit = 10;
+
+    let navigate = useNavigate();
+    
+    let { userAuth: { access_token }} = useContext(UserContext);
 
     let { blog, blog: {banner, title, tags, description, content}, setEditorState, setBlog } = useContext(EditorContext);
 
@@ -36,7 +43,7 @@ const PublishForm = () => {
     }
 
     const handleKeyDown = (e) => {
-        if (e.keyCode == 13  || e.keyCode == 188) {
+        if (e.keyCode == 13  || e .keyCode == 188) {
             e.preventDefault();
 
             let tag = e.target.value;
@@ -52,6 +59,69 @@ const PublishForm = () => {
             e.target.value = "";
         }
     }
+
+    const publishBlog = (e) =>{
+
+        // if(e.target.className.includes('disable')){
+        //     return;
+        // }
+
+        if(!title.length){
+            return toast.error("Blog Title is required to publish the blog")
+        }
+        if(!description.length){
+            return toast.error("Blog Description is required to publish the blog")
+        }
+        if(!tags.length){
+            return toast.error("Atleast one tag is required to publish the blog")
+        }
+
+        let loadingTost = toast.loading("Publishing Your Blog...");
+
+        e.target.classList.add('disable');
+        e.target.innerText = "Publishing...";
+        e.target.style.opacity = "0.7";
+
+        let blogObj = {
+            title, banner, content: content.join('/n'), des: description, tags, draft: false
+        }
+
+        axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/create-blog", blogObj, {
+            headers: {
+                'Authorization': `Bearer ${access_token}`
+            }
+        })
+        .then((res) => {
+            e.target.classList.remove('disable');
+            e.target.innerText = "Published";
+            e.target.style.opacity = "1";
+
+            toast.dismiss(loadingTost);
+            toast.success("Published 🗳️");
+
+            setTimeout(() => {
+                setEditorState("editor");
+                setBlog({
+                    title: '',
+                    banner: '',
+                    content: [],
+                    tags: [],
+                    des: '',
+                    author: { personal_info: {} }
+                })
+            }, 500)
+        })
+        .catch(({ response }) => {
+            e.target.classList.remove('disable');
+            e.target.innerText = "Publish";
+            e.target.style.opacity = "1";
+
+            toast.dismiss(loadingTost);
+            return toast.error(response.data.error);
+        })
+
+    }
+
 
     return (
         <AnimationWrapper>
@@ -131,7 +201,9 @@ const PublishForm = () => {
                     <p className="mt-1 text-dark-grey text-sm text-right mb-20"> ( Helps for searching and ranking your blog post) </p>
 
                     <div className="flex justify-center mt-8">
-                            <button className="mt-5 px-8 btn-dark bg-slate-800 text-emerald-500">
+                            <button className="mt-5 px-8 btn-dark bg-slate-800 text-emerald-500"
+                                    onClick={publishBlog}
+                            >
                                 Publish
                             </button>
                     </div>
