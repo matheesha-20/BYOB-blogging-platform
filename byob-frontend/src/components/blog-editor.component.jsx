@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AnimationWrapper from "../common/page-animation";
 import defaultBanner from "../imgs/blog banner.png";
 import { uploadImg } from "../common/aws";
@@ -7,10 +7,17 @@ import { Toaster, toast } from "react-hot-toast";
 import { EditorContext } from "../pages/editor.pages";
 import EditorJS from "@editorjs/editorjs";
 import { tools } from "./tools.component";
+import axios from "axios";
+import { UserContext } from "../App";
 
 const BlogEditor = () => {
 
     let {blog, blog:{ title, banner, content, tags, des}, setBlog, textEditor, setTextEditor, setEditorState} = useContext(EditorContext)
+
+
+    let { userAuth: { access_token } } = useContext(UserContext)
+
+    let navigator = useNavigate();
 
     useEffect(() => {
         setTextEditor(new EditorJS({
@@ -90,6 +97,68 @@ const BlogEditor = () => {
         }
     }
 
+    const handleDraft = (e) => {
+        if(e.target.className.includes('disable')){
+            return;
+        }
+
+        if (!title.length){
+            return toast.error("Add a title before saving draft!");
+        }
+
+        let loadingTost = toast.loading("Saving Draft... 📤");
+
+        e.target.classList.add('disable');
+        e.target.innerText = "Saving...";
+        e.target.style.opacity = "0.7";
+
+        if (textEditor.isReady) {
+
+            textEditor.save().then( content => {
+
+            let blogObj = {
+            title,
+            banner,
+            content,
+            des,
+            tags,
+            draft: true
+        }
+
+        axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/create-blog", blogObj, {
+            headers: {
+                'Authorization': `Bearer ${access_token}`
+            }
+        })
+        .then((res) => {
+            e.target.classList.remove('disable');
+            e.target.innerText = "Save Draft";
+            e.target.style.opacity = "1";
+
+            toast.dismiss(loadingTost);
+            toast.success("Saved 🗳️");
+
+            setTimeout(() => {
+                navigator("/")
+            }, 500)
+        })
+        .catch(({ response }) => {
+            e.target.classList.remove('disable');
+            e.target.innerText = "Save Draft";
+            e.target.style.opacity = "1";
+
+            toast.dismiss(loadingTost);
+            return toast.error(response.data.error);
+        })
+            })
+            .catch((error) => {
+                console.log("Saving failed: ", error) });
+        }
+
+        
+
+    }
+
     return (
         <><header id="header" className="text-xl font-bold text-emerald-700 bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
             <nav className="container mx-auto px-6 py-5 flex justify-between items-center">
@@ -111,7 +180,8 @@ const BlogEditor = () => {
                                             </button>
                     </Link>
                     <Link to="">
-                                        <button className="bg-white text-emerald-500 font-semibold px-5 py-1 rounded-full border border-emerald-600 hover:bg-emerald-50 transition min-w-[100px] text-center">
+                                        <button className="bg-white text-emerald-500 font-semibold px-5 py-1 rounded-full border border-emerald-600 hover:bg-emerald-50 transition min-w-[100px] text-center"
+                                                onClick={handleDraft}>
                                             Save Draft
                                         </button>
                                         

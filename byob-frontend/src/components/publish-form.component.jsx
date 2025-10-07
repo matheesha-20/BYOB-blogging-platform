@@ -62,28 +62,33 @@ const PublishForm = () => {
 
     const publishBlog = (e) =>{
 
-        // if(e.target.className.includes('disable')){
-        //     return;
-        // }
+        if(e.target.className.includes('disable')){
+            return;
+        }
 
-        if(!title.length){
+        if(!title || title.length === 0 ){
             return toast.error("Blog Title is required to publish the blog")
         }
-        if(!description.length){
+        if(!description || description.length === 0 ){
             return toast.error("Blog Description is required to publish the blog")
         }
-        if(!tags.length){
+        if(!tags || tags.length === 0 ){
             return toast.error("Atleast one tag is required to publish the blog")
         }
 
-        let loadingTost = toast.loading("Publishing Your Blog...");
+        let loadingTost = toast.loading("Publishing Your Blog... 📤");
 
         e.target.classList.add('disable');
         e.target.innerText = "Publishing...";
         e.target.style.opacity = "0.7";
 
         let blogObj = {
-            title, banner, content: content.join('/n'), des: description, tags, draft: false
+            title,
+            banner,
+            content: content.blocks,
+            des: description,
+            tags,
+            draft: false
         }
 
         axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/create-blog", blogObj, {
@@ -100,15 +105,8 @@ const PublishForm = () => {
             toast.success("Published 🗳️");
 
             setTimeout(() => {
+                // navigate("/");
                 setEditorState("editor");
-                setBlog({
-                    title: '',
-                    banner: '',
-                    content: [],
-                    tags: [],
-                    des: '',
-                    author: { personal_info: {} }
-                })
             }, 500)
         })
         .catch(({ response }) => {
