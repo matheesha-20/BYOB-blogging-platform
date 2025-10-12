@@ -1,7 +1,14 @@
-const Home = () => {
+import AnimationWrapper from "../common/page-animation";
+
+const HomePage = () => {
     return (
-        <h1 className="text-center text-4xl md:text-5xl font-bold mb-4 py-10">Build Your Own Blog</h1>
+        <AnimationWrapper>
+            <section className="">
+                <h1>hi</h1>
+            </section>
+        </AnimationWrapper>
+
     )
 }
 
-export default Home;
+export default HomePage;
