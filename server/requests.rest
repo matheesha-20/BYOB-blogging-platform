@@ -1,15 +1,15 @@
-POST http://localhost:3000/create-blog
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZGFjNDcxOGViMjBkMDYyNmI1ZTMyYSIsImlhdCI6MTc1OTE3NDQ5M30.4SFUZOO5l5OJ7v0m0mM9lIexa6uKnqkj_YRPDS4mi1w
+# POST http://localhost:3000/create-blog
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZGFjNDcxOGViMjBkMDYyNmI1ZTMyYSIsImlhdCI6MTc1OTE3NDQ5M30.4SFUZOO5l5OJ7v0m0mM9lIexa6uKnqkj_YRPDS4mi1w
 
-{
-    "title": "#ihon",
-    "banner": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-    "content": "this is a test blog content",
-    "des": "this is a test blog description",
-    "tags": ["test", "blog"],
-    "draft": false
-}
+# {
+#     "title": "#ihon",
+#     "banner": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+#     "content": "this is a test blog content",
+#     "des": "this is a test blog description",
+#     "tags": ["test", "blog"],
+#     "draft": false
+# }
 
 # POST http://localhost:3000/signin
 # Content-Type: application/json
@@ -18,3 +18,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZGFjNDcxO
 #     "email": "test@testmail.com",
 #     "password": "Testpassword12345"
 # }
+
+GET http://localhost:3000/latest-blogs
