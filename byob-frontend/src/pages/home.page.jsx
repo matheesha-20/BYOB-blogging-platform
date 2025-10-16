@@ -32,9 +32,11 @@ const HomePage = () => {
 
                        <>
                        {
-                            latestBlogs == null ? 
-                                <Loader /> :
-                                <Loader /> 
+                            latestBlogs == null ? <Loader /> 
+                            : latestBlogs.map((blog, index) => (
+                                <h1 key={index}><img src={blog.image} alt={blog.title} /></h1>
+                            ))
+                               
             
                         }
                        </>
