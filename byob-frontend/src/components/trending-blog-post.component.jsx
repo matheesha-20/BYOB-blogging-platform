@@ -3,18 +3,7 @@ import { Link } from "react-router-dom";
 const TrendingBlogPost = ({ content, author, index }) => {
 
     let { title, banner, des, tags, publishedAt, activity: { total_likes }, blog_id: id } = content;
-    let { username, fullname, profile_img } = author;
-
-    // Spectacles with green eyes SVG
-    const SpectaclesGreenEyesSVG = () => (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <circle cx="5" cy="12" r="4" stroke="#36dd68" strokeWidth="2" fill="#36dd68"/>
-            <circle cx="17" cy="12" r="4" stroke="#36dd68" strokeWidth="2" fill="#36dd68"/>
-            <rect x="7" y="11" width="10" height="2" fill="#36dd68"/>
-            <rect x="3" y="10" width="4" height="4" fill="#ffffffff"/>
-            <rect x="15" y="10" width="4" height="4" fill="#ffffffff"/>
-        </svg>
-    );
+    let { username, profile_img } = author;
 
     return (
         <div className="bg-white rounded-lg shadow-md overflow-hidden mb-5 relative">
