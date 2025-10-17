@@ -260,6 +260,18 @@ server.post("/google-auth", async (req, res) => {
 
 })
 
+server.get('/trending-blogs', async (req, res) => {
+
+    Blog.find({draft: false}).sort({ "activity.total_reads": -1, "activity.total_likes": -1, "publishedAt": -1 }).limit(20).populate('author', 'personal_info.username personal_info.fullname personal_info.profile_img -_id').select("blog_id title banner des tags publishedAt -_id activity.total_likes activity.total_reads")
+    .then(blogs => {
+        return res.status(200).json({ blogs });
+    })
+    .catch(err => {
+        return res.status(500).json({"error": err.message});
+    })
+
+})
+
 server.get('/latest-blogs', async (req, res) => {
 
     Blog.find({draft: false}).sort({"publishedAt": -1}).limit(20).populate('author', 'personal_info.username personal_info.fullname personal_info.profile_img -_id').select("blog_id title banner des tags publishedAt -_id activity.total_likes")
