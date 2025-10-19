@@ -6,6 +6,7 @@ import Loader from "../components/loader.component";
 import BlogPostCard from "../components/blog-post.component";
 import TrendingBlogPost from "../components/trending-blog-post.component";
 import MinimalBlogPost from "../components/minimal-blog-post-component.jsx";
+import NoDataMessage from "../components/nodata.component";
 
 const HomePage = () => {
 
@@ -13,7 +14,7 @@ const HomePage = () => {
     let [ trendingBlogs, setTrendingBlogs ] = useState(null);
     let [ pageState, setPageState ] = useState("Home");
 
-    let categories = ["Technology", "Health", "Travel", "Food", "Lifestyle", "Education", "Finance", "Entertainment", "Universe"];
+    let categories = ["Technology", "Health", "Travel", "Food", "Lifestyle", "Education", "Finance", "Entertainment", "Universe", "Netflix"];
 
     const fetchLatestBlogs = () => {
         axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/latest-blogs")
@@ -35,6 +36,16 @@ const HomePage = () => {
         })
     };
 
+    const fetchBlogsByCategory = () => {
+        axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/search-blogs", { tag: pageState })
+        .then(({ data: { blogs } }) => {
+            setLatestBlogs(blogs);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    };
+
     const loadBlogByCategory = (e) => {
 
         //e.target.classList.add('bg-slate-600');
@@ -47,7 +58,6 @@ const HomePage = () => {
 
             if (pageState == category) {
                  setPageState("Home");
-                 fetchLatestBlogs();
                  //e.target.classList.remove('bg-slate-600');
                  return;
             }
@@ -56,9 +66,16 @@ const HomePage = () => {
     };
 
     useEffect(() => {
-        fetchLatestBlogs();
+
+        if (pageState == "Home") {
+            fetchLatestBlogs();
+        }else {
+            fetchBlogsByCategory();
+        }
+
         fetchTrendingBlogs();
-    }, [])
+
+    }, [pageState]);
 
     return (
         <AnimationWrapper>
@@ -71,7 +88,8 @@ const HomePage = () => {
                        <>
                        {
                             latestBlogs == null ? <Loader /> 
-                            : latestBlogs.map((blog, index) => (
+                            :  latestBlogs.length == 0 ? <NoDataMessage message={"No blogs found !"}/>
+                            :latestBlogs.map((blog, index) => (
                                 <AnimationWrapper transition={{ duration: 1, delay: index*.1}} key={index}>
 
                                     <BlogPostCard content={blog} author={blog.author.personal_info} />

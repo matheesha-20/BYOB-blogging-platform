@@ -107,7 +107,7 @@ server.get('/get-upload-url', (req, res) => {
     console.log(err.message);
     return res.status(500).json({error:err.message})
   })
-})
+});
 
 server.post("/signup", (req, res) => {
 
@@ -170,7 +170,7 @@ server.post("/signup", (req, res) => {
 
    //return res.status(200).json({"status" : "okay"})
 
-})
+});
 
 server.post("/signin", (req, res) => 
 {
@@ -209,7 +209,7 @@ server.post("/signin", (req, res) =>
     
   })
 
-})
+});
 
 server.post("/google-auth", async (req, res) => {
     let { access_token } = req.body;
@@ -258,7 +258,7 @@ server.post("/google-auth", async (req, res) => {
         return res.status(500).json({"error": "Failed to authenticate you with google. Try with different account!"})
     })
 
-})
+});
 
 server.get('/trending-blogs', async (req, res) => {
 
@@ -270,7 +270,7 @@ server.get('/trending-blogs', async (req, res) => {
         return res.status(500).json({"error": err.message});
     })
 
-})
+});
 
 server.get('/latest-blogs', async (req, res) => {
 
@@ -282,7 +282,27 @@ server.get('/latest-blogs', async (req, res) => {
         return res.status(500).json({"error": err.message});
     })
 
-})
+});
+
+server.post('/search-blogs', async (req, res) => {
+
+    let { tag } = req.body;
+
+    let findQuery = { tags: tag, draft: false };
+
+    Blog.find(findQuery)
+        .sort({ "activity.total_reads": -1, "activity.total_likes": -1, "publishedAt": -1 })
+        .limit(20)
+        .populate('author', 'personal_info.username personal_info.fullname personal_info.profile_img -_id')
+        .select("blog_id title banner des tags publishedAt -_id activity.total_likes activity.total_reads")
+        .then(blogs => {
+            return res.status(200).json({ blogs });
+        })
+        .catch(err => {
+            return res.status(500).json({ "error": err.message });
+        })
+
+});
 
 server.post('/create-blog', verifyJWT, (req, res) => {
 
