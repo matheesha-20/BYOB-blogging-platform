@@ -7,8 +7,8 @@ const MinimalBlogPost = ({ content, author, index }) => {
 
     return (
         index < 10 ? (
-        <div className="bg-white rounded-lg shadow-md overflow-hidden mb-5 flex items-center p-2 relative">
-            <div className="flex-shrink-0 flex flex-col items-center justify-center mr-8">
+            <div className="bg-white bg-opacity-30 rounded-lg shadow-md overflow-hidden mb-5 flex items-center p-4 max-h-[220px] w-[35vw] relative transition-all pl-10 duration-300 hover:bg-opacity-50">
+            <div className="flex flex-col items-center justify-center mr-8">
                 <div className="text-6xl font-extrabold text-gray-300 select-none">
                     {index < 10 ? "#" + (index + 1) : index}
                 </div>
@@ -16,7 +16,7 @@ const MinimalBlogPost = ({ content, author, index }) => {
             <div className="flex-1">
                 <div className="flex items-center justify-between">
                     <div className="relative inline-block">
-                        <h1 className="text-2xl font-semibold max-w-[50vw] relative z-10 px-2 py-1">
+                        <h1 className="text-xl font-semibold max-w-[80vw] relative z-10 px-2 py-1">
                             <Link to={"/blog/" + id}>{title}</Link>
                         </h1>
                     </div>

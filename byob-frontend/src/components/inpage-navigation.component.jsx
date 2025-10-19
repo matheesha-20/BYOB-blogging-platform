@@ -14,7 +14,7 @@ const InPageNavigation = ({ routes, defaultHidden, children }) => {
             {
                 routes.map((route, index) => (
                    <button key={index}
-                        className={"px-5 text-slate-600 " + (defaultHidden.includes(route) ? "md:hidden" : "")}
+                        className={"px-5 text-slate-600 capitalize " + (defaultHidden.includes(route) ? "md:hidden" : "")}
                         onClick={() => setInPageNavIndex(index)}
                         style={inPageNavIndex === index ? { borderBottom: "3px solid #2b9572ff", color: "#333534ff", fontWeight: "600" } : { borderBottom: "1px solid transparent", color: "#374151", fontWeight: "500"  }}
                     >
