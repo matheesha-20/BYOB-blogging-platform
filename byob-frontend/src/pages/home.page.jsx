@@ -11,7 +11,7 @@ import NoDataMessage from "../components/nodata.component";
 const HomePage = () => {
 
     let [ latestBlogs, setLatestBlogs ] = useState(null);
-    let [ trendingBlogs, setTrendingBlogs ] = useState(null);
+    let [ trendingBlogs, setTrendingBlogs ] = useState([]);
     let [ pageState, setPageState ] = useState("Home");
 
     let categories = ["Technology", "Health", "Travel", "Food", "Lifestyle", "Education", "Finance", "Entertainment", "Universe", "Netflix"];
@@ -102,7 +102,9 @@ const HomePage = () => {
                        </>
 
                         { trendingBlogs == null ? <Loader />
-                        : trendingBlogs.map((blog, index) => (
+                        : trendingBlogs.length == 0 ? <NoDataMessage message={"No trending blogs found !"}/>
+                        :
+                        trendingBlogs.map((blog, index) => (
                             <AnimationWrapper transition={{ duration: 1, delay: index*.1}} key={index}>
 
                                 <TrendingBlogPost content={blog} author={blog.author.personal_info} index={index} />
@@ -139,8 +141,9 @@ const HomePage = () => {
                             Trending <i className="fi fi-rr-arrow-trend-up text-emerald-500"></i>
                         </h1>
                     </div>
-                    { trendingBlogs == null ? <Loader />
-                        : trendingBlogs.map((blog, index) => (
+                    { trendingBlogs.length == 0 ? <NoDataMessage message={"No trending blogs found !"}/>
+                        :
+                        trendingBlogs.map((blog, index) => (
                             <AnimationWrapper transition={{ duration: 1, delay: index*.1}} key={index}>
 
                                 <MinimalBlogPost content={blog} author={blog.author.personal_info} index={index} />
