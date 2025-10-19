@@ -29,32 +29,29 @@ const Navbar = () => {
         <nav className="container mx-auto px-6 py-3 flex justify-between items-center">
             <a href="/" className="text-xl font-bold text-emerald-700"><h1 className="text-2xl font-bold text-emerald-700">-__BYOB__-</h1></a>
 
-            <div className="md:flex space-x-8 md:relative md:block md:insert-0 md:p-0 md:w-auto">
+            <div className="flex items-center space-x-4 space-y-1">
+            <div className="relative w-full max-w-md">
                 <div className={"relative w-full max-w-md " + (searchBoxVisibility ? "show" : "hide")}>
-                <button 
-                    className="absolute inset-y-0 left-0 flex items-center pl-3 mb-2">
-                    <i className="fas fa-search text-emerald-500 text-lg"></i>
-                </button>
-                       <div className="relative w-full max-w-md">
+                    <div className="relative w-full max-w-md">
                             <input
                                 type="text"
-                                placeholder="Search"
-                                className="w-full pl-12 pr-4 py-2 bg-transparent text-slate-600 placeholder-emerald-500 focus:placeholder-slate-400 hover:text-emerald-600 border-none focus:outline-none transition duration-300 hover:text-emerald-600 focus:text-emerald-500"
+                                placeholder="Search Blogs..."
+                                className="w-full pl-12 pr-4  py-2 mt-2  bg-slate-100 rounded-full"
                             />
-                            
-                            <div className="absolute bottom-0 left-0 w-full h-[2px] bg-slate-800 opacity-40"></div>
-
                             <div className="absolute bottom-0 left-0 w-full h-[6px] overflow-hidden">
-                                <div className="w-full h-full bg-gradient-to-r from-transparent via-emerald-600 to-transparent animate-scan">  
+                                <div className="w-full h-full bg-gradient-to-r via-emerald-600">  
                                 </div>
                             </div>
-                        </div>
+                        </div>             
 
-            </div>
-                <button  onClick={() => setSearchBoxVisibility(currentval => !currentval)}>
+                </div>
+
+
+                <button className="absolute inset-y-0 right-0 flex items-center pr-4 mt-1"  onClick={() => setSearchBoxVisibility(currentval => !currentval)}>
                     <i className="fas fa-search text-emerald-500 text-2xl"></i>
                     
                     </button>
+            </div>  
 
 
                 <div className="flex space-x-6 items-center">
