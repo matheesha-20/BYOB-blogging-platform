@@ -16,10 +16,16 @@ const HomePage = () => {
 
     let categories = ["Technology", "Health", "Travel", "Food", "Lifestyle", "Education", "Finance", "Entertainment", "Universe", "Netflix"];
 
-    const fetchLatestBlogs = () => {
-        axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/latest-blogs")
+    const fetchLatestBlogs = ({ page=1 } = {}) => {
+        axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/latest-blogs", { page })
         .then(({ data: { blogs } }) => {
-            setLatestBlogs(blogs);
+
+            let formatedBlogs = blogs.map(blog => {
+
+            //setLatestBlogs(blogs);
+
+            
+            
         })
         .catch(err => {
             console.log(err);
@@ -68,7 +74,7 @@ const HomePage = () => {
     useEffect(() => {
 
         if (pageState == "Home") {
-            fetchLatestBlogs();
+            fetchLatestBlogs({ page: 1 });
         }else {
             fetchBlogsByCategory();
         }

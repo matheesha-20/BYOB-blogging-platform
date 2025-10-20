@@ -272,9 +272,11 @@ server.get('/trending-blogs', async (req, res) => {
 
 });
 
-server.get('/latest-blogs', async (req, res) => {
+server.post('/latest-blogs', async (req, res) => {
 
-    Blog.find({draft: false}).sort({"publishedAt": -1}).limit(20).populate('author', 'personal_info.username personal_info.fullname personal_info.profile_img -_id').select("blog_id title banner des tags publishedAt -_id activity.total_likes")
+    let { page } = req.body;
+
+    Blog.find({draft: false}).sort({"publishedAt": -1}).skip(10 * (page - 1)).limit(10).populate('author', 'personal_info.username personal_info.fullname personal_info.profile_img -_id').select("blog_id title banner des tags publishedAt -_id activity.total_likes")
     .then(blogs => {
         return res.status(200).json({ blogs });
     })
