@@ -7,22 +7,34 @@ import BlogPostCard from "../components/blog-post.component";
 import TrendingBlogPost from "../components/trending-blog-post.component";
 import MinimalBlogPost from "../components/minimal-blog-post-component.jsx";
 import NoDataMessage from "../components/nodata.component";
+import { filterPaginationData } from "../common/filter-pagination-data.jsx";
 
 const HomePage = () => {
 
-    let [ latestBlogs, setLatestBlogs ] = useState(null);
+    let [ latestBlogs, setLatestBlogs ] = useState({ results: []});
     let [ trendingBlogs, setTrendingBlogs ] = useState([]);
     let [ pageState, setPageState ] = useState("Home");
 
     let categories = ["Technology", "Health", "Travel", "Food", "Lifestyle", "Education", "Finance", "Entertainment", "Universe", "Netflix"];
 
-    const fetchLatestBlogs = ({ page=1 } = {}) => {
+    const fetchLatestBlogs = ( page=1) => {
         axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/latest-blogs", { page })
-        .then(({ data: { blogs } }) => {
+        .then(async({ data }) => {
 
-            let formatedBlogs = blogs.map(blog => {
+            console.log(data.blogs);
+            
 
-            //setLatestBlogs(blogs);
+            let formatedBlogs = await filterPaginationData({
+                state: latestBlogs,
+                data: data.blogs,
+                page,
+                countRoute: "/all-latest-blogs/count",
+            });
+
+            console.log(formatedBlogs);
+            
+
+            setLatestBlogs(formatedBlogs);
 
             
             
@@ -74,7 +86,7 @@ const HomePage = () => {
     useEffect(() => {
 
         if (pageState == "Home") {
-            fetchLatestBlogs({ page: 1 });
+            fetchLatestBlogs({page: 1});
         }else {
             fetchBlogsByCategory();
         }
@@ -95,7 +107,7 @@ const HomePage = () => {
                        {
                             latestBlogs == null ? <Loader /> 
                             :  latestBlogs.length == 0 ? <NoDataMessage message={"No blogs found !"}/>
-                            :latestBlogs.map((blog, index) => (
+                            :latestBlogs.results.map((blog, index) => (
                                 <AnimationWrapper transition={{ duration: 1, delay: index*.1}} key={index}>
 
                                     <BlogPostCard content={blog} author={blog.author.personal_info} />

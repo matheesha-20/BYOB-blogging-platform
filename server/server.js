@@ -286,6 +286,18 @@ server.post('/latest-blogs', async (req, res) => {
 
 });
 
+server.post('/all-latest-blogs/count', async (req, res) => {
+
+    Blog.countDocuments({ draft: false })
+    .then(count => {
+        return res.status(200).json({ count });
+    })
+    .catch(err => {
+        return res.status(500).json({"error": err.message});
+    });
+
+});
+
 server.post('/search-blogs', async (req, res) => {
 
     let { tag } = req.body;
