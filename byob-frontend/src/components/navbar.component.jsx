@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { UserContext } from "../App"
 import UserNavigationPanel from "./user-navigation.component"
 
@@ -9,12 +9,20 @@ const Navbar = () => {
     const [ searchBoxVisibility, setSearchBoxVisibility ] = useState(false);
     const [ userNavPanel, setUserNavPanel ] = useState(false);
 
+    let Navigate = useNavigate();
+
     const { userAuth } = useContext(UserContext);
     const access_token = userAuth?.access_token;
     const profile_img = userAuth?.profile_img;
 
     const handelUserNavPanel = () => {
         setUserNavPanel(currentval => !currentval);
+    }
+
+    const handleSearchfun = (e) => {
+        if (e.key === "Enter") {
+            Navigate(`/search?query=${e.target.value}`);
+        }
     }
 
     const handelBlur = () => {
@@ -37,6 +45,7 @@ const Navbar = () => {
                                 type="text"
                                 placeholder="Search Blogs..."
                                 className="w-full pl-12 pr-4  py-2 mt-2 placeholder-slate-600 shadow-md text-slate-600 bg-slate-100 rounded-full focus:outline-emerald-500 "
+                                onKeyDown={handleSearchfun}
                             />
                             <div className="absolute bottom-0 left-0 w-full h-[6px] overflow-hidden">
                                 <div className="w-full h-full bg-gradient-to-r via-emerald-600">  
