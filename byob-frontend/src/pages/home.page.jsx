@@ -8,16 +8,17 @@ import TrendingBlogPost from "../components/trending-blog-post.component";
 import MinimalBlogPost from "../components/minimal-blog-post-component.jsx";
 import NoDataMessage from "../components/nodata.component";
 import { filterPaginationData } from "../common/filter-pagination-data.jsx";
+import LoadMoreBtn from "../components/load-more.component.jsx";
 
 const HomePage = () => {
 
-    let [ latestBlogs, setLatestBlogs ] = useState({ results: []});
+    let [ latestBlogs, setLatestBlogs ] = useState({ results: [] });
     let [ trendingBlogs, setTrendingBlogs ] = useState([]);
     let [ pageState, setPageState ] = useState("Home");
 
     let categories = ["Technology", "Health", "Travel", "Food", "Lifestyle", "Education", "Finance", "Entertainment", "Universe", "Netflix"];
 
-    const fetchLatestBlogs = ( page=1) => {
+    const fetchLatestBlogs = ( {page=1}) => {
         axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/latest-blogs", { page })
         .then(async({ data }) => {
 
@@ -28,7 +29,7 @@ const HomePage = () => {
                 state: latestBlogs,
                 data: data.blogs,
                 page,
-                countRoute: "/all-latest-blogs/count",
+                countRoute: "/all-latest-blogs/count"
             });
 
             console.log(formatedBlogs);
@@ -54,10 +55,18 @@ const HomePage = () => {
         })
     };
 
-    const fetchBlogsByCategory = () => {
-        axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/search-blogs", { tag: pageState })
-        .then(({ data: { blogs } }) => {
-            setLatestBlogs(blogs);
+    const fetchBlogsByCategory = ({ page = 1 }) => {
+        axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/search-blogs", { tag: pageState, page })
+        .then(async ({ data: { blogs } }) => {
+
+            let formatedBlogs = await filterPaginationData({
+                state: latestBlogs,
+                data: blogs,
+                page,
+                countRoute: "/search-blogs/count",
+                data_to_send: { tag: pageState }
+            });
+            setLatestBlogs(formatedBlogs);
         })
         .catch(err => {
             console.log(err);
@@ -88,7 +97,7 @@ const HomePage = () => {
         if (pageState == "Home") {
             fetchLatestBlogs({page: 1});
         }else {
-            fetchBlogsByCategory();
+            fetchBlogsByCategory({page: 1});
         }
 
         fetchTrendingBlogs();
@@ -117,6 +126,8 @@ const HomePage = () => {
                                
             
                         }
+                        <LoadMoreBtn state={latestBlogs} fetchDataFun={(pageState == "Home") ? fetchLatestBlogs : fetchBlogsByCategory} />
+                        
                        </>
 
                         { trendingBlogs == null ? <Loader />

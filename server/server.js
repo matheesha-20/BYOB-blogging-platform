@@ -300,7 +300,7 @@ server.post('/all-latest-blogs/count', async (req, res) => {
 
 server.post('/search-blogs', async (req, res) => {
 
-    let { tag } = req.body;
+    let { tag, page } = req.body;
 
     let findQuery = { tags: tag, draft: false };
 
@@ -309,12 +309,27 @@ server.post('/search-blogs', async (req, res) => {
         .limit(20)
         .populate('author', 'personal_info.username personal_info.fullname personal_info.profile_img -_id')
         .select("blog_id title banner des tags publishedAt -_id activity.total_likes activity.total_reads")
+        .skip(20 * (page - 1))
         .then(blogs => {
             return res.status(200).json({ blogs });
         })
         .catch(err => {
             return res.status(500).json({ "error": err.message });
         })
+
+});
+
+server.post('/search-blogs/count', async (req, res) => {
+
+    let { tag } = req.body;
+
+    Blog.countDocuments({ tags: tag, draft: false })
+    .then(count => {
+        return res.status(200).json({ docscount: count });
+    })
+    .catch(err => {
+        return res.status(500).json({"error": err.message});
+    });
 
 });
 
