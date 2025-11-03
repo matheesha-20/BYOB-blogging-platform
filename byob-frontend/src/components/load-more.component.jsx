@@ -1,6 +1,6 @@
 const LoadMoreBtn = ({ state, fetchDataFun }) => {
 
-  if (state !== null &&  state.results.length) {
+  if (state !== null && state.results.length) {
     
     
     

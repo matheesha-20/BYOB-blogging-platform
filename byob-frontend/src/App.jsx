@@ -6,6 +6,7 @@ import { lookINSession } from "./common/session";
 import { useLocation } from "react-router-dom";
 import Editor from "./pages/editor.pages";
 import Home from "./pages/home.page";
+import SearchPage from "./pages/search.page";
 
 
 export const UserContext = createContext({})
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/editor" element={<Editor />} />
         <Route path="/signin" element={<UserAuthForm key="signin" type="Sign-in" />} />
         <Route path="/signup" element={<UserAuthForm key="signup" type="Sign-up" />} />
+        <Route path="search/:query" element={<SearchPage />} />
         <Route index element={<Home />} />
       </Routes>
     </UserContext.Provider>

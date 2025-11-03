@@ -298,11 +298,42 @@ server.post('/all-latest-blogs/count', async (req, res) => {
 
 });
 
+server.post('/search-users', async (req, res) => {
+
+    let { query, page } = req.body;
+
+    User.find({ "personal_info.username": new RegExp(query, "i") })
+        .limit(20)
+        .select("personal_info.username personal_info.fullname personal_info.profile_img -_id")
+        .then(users => {
+            return res.status(200).json({ users });
+        })
+        .catch(err => {
+            return res.status(500).json({ "error": err.message });
+        })
+
+    
+
+});
+
 server.post('/search-blogs', async (req, res) => {
 
-    let { tag, page } = req.body;
+    let { tag, query, page } = req.body;
 
-    let findQuery = { tags: tag, draft: false };
+    let findQuery;
+
+    if (query) {
+  findQuery = {
+    draft: false,
+    $or: [
+      { title: new RegExp(query, "i") },
+      { tags: new RegExp(query, "i") }
+    ]
+  };
+}
+    else if (tag) {
+        findQuery = { tags: tag, draft: false };
+    }
 
     Blog.find(findQuery)
         .sort({ "activity.total_reads": -1, "activity.total_likes": -1, "publishedAt": -1 })
@@ -319,18 +350,24 @@ server.post('/search-blogs', async (req, res) => {
 
 });
 
-server.post('/search-blogs/count', async (req, res) => {
+server.post('/search-blogs-count', async (req, res) => {
+  let { tag, query } = req.body;
 
-    let { tag } = req.body;
+  let findQuery;
 
-    Blog.countDocuments({ tags: tag, draft: false })
+  if (tag) {
+    findQuery = { tags: tag, draft: false };
+  } else if (query) {
+    findQuery = { title: new RegExp(query, "i"), draft: false };
+  }
+
+  Blog.countDocuments(findQuery)
     .then(count => {
-        return res.status(200).json({ docscount: count });
+      return res.status(200).json({ docscount: count });
     })
     .catch(err => {
-        return res.status(500).json({"error": err.message});
+      return res.status(500).json({ error: err.message });
     });
-
 });
 
 server.post('/create-blog', verifyJWT, (req, res) => {

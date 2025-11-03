@@ -9,7 +9,7 @@ const Navbar = () => {
     const [ searchBoxVisibility, setSearchBoxVisibility ] = useState(false);
     const [ userNavPanel, setUserNavPanel ] = useState(false);
 
-    let Navigate = useNavigate();
+    let navigate = useNavigate();
 
     const { userAuth } = useContext(UserContext);
     const access_token = userAuth?.access_token;
@@ -20,8 +20,10 @@ const Navbar = () => {
     }
 
     const handleSearchfun = (e) => {
+        let query = e.target.value;
+        
         if (e.key === "Enter") {
-            Navigate(`/search?query=${e.target.value}`);
+            navigate(`/search/${query}`);
         }
     }
 
