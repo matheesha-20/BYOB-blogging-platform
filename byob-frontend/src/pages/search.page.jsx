@@ -106,9 +106,9 @@ const SearchPage = () => {
 
             </div>
 
-            <div className="min-w-[40%] lg:min-w-[350px] max-w-min border-4 border-gray-300 border-r border-t border-b pl-2 pr-2 pt-3 max-md:hidden">
+            <div className="min-w-[40%] lg:min-w-[350px] max-w-min border-l-2 border-gray-300 pl-2 pr-2 pt-3 max-md:hidden">
                 <div className="flex flex-col gap-5">
-                    <div className="text-xl font-semibold mb-3">Search Results for Users<i className="fi fi-ss-user text-green-600 text-base align-middle ml-1"></i> </div>
+                    <div className="text-xl font-semibold mb-3"><span className="underline decoration-slate-500">Search results for Users</span> <i className="fi fi-ss-user text-green-600 text-base align-middle ml-1"></i> </div>
                     <UserCardWrapper />
                 </div>
             </div>
