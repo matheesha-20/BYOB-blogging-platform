@@ -3,6 +3,7 @@ import InPageNavigation from "../components/inpage-navigation.component.jsx";
 import { useEffect, useState } from "react";
 import Loader from "../components/loader.component.jsx";
 import BlogPostCard from "../components/blog-post.component.jsx";
+import UserCard from "../components/usercard.component.jsx";
 import AnimationWrapper from "../common/page-animation.jsx";
 import NoDataMessage from "../components/nodata.component.jsx";
 import LoadMoreBtn from "../components/load-more.component.jsx";
@@ -13,6 +14,7 @@ const SearchPage = () => {
 
     let { query } = useParams();
     let [ Blogs, setBlogs ] = useState({ results: [] });
+    let [ Users, setUsers ] = useState({ results: [] });
 
 
 
@@ -36,14 +38,45 @@ const SearchPage = () => {
         });
     }
 
+    const fetchUsers = () => {
+
+        axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/search-users", { query })
+        .then(async ({ data: { users } }) => {
+            setUsers({ results: users });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+
     const resetState = () => {
         setBlogs({ results: [] });
+        setUsers({ results: [] });
     }
 
     useEffect(() => {
         resetState();
         searchBlogs({ page: 1, create_new_arr: true });
+        fetchUsers();
     }, [query]);
+
+    const UserCardWrapper = () => {
+        return (
+            <div className="flex flex-col gap-5">
+                {
+                    Users == null ? <Loader />
+                    : Users.results.length == 0 ? <NoDataMessage message={"No users found !"}/>
+                    : Users.results.map((user, index) => (
+                        <AnimationWrapper transition={{ duration: 1, delay: index*.1}} key={index}>
+
+                            <UserCard user={user} />
+
+                        </AnimationWrapper>
+                    ))
+                }
+            </div>
+        );
+    }
 
     return (
        <section className="h-cover flex justify-center gap-10 pl-10 pr-5">
@@ -68,8 +101,16 @@ const SearchPage = () => {
                     
                     </>
 
+                    <UserCardWrapper />
                 </InPageNavigation>
 
+            </div>
+
+            <div className="min-w-[40%] lg:min-w-[350px] max-w-min border-4 border-gray-300 border-r border-t border-b pl-2 pr-2 pt-3 max-md:hidden">
+                <div className="flex flex-col gap-5">
+                    <div className="text-xl font-semibold mb-3">Search Results for Users<i className="fi fi-ss-user text-green-600 text-base align-middle ml-1"></i> </div>
+                    <UserCardWrapper />
+                </div>
             </div>
 
        </section>

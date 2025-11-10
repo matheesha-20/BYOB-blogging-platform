@@ -19,9 +19,9 @@
 #     "password": "Testpassword12345"
 # }
 
-POST http://localhost:3000/search-blogs
+POST http://localhost:3000/search-users
 Content-Type: application/json
 
 {
-    "tag": "tech"
+    "query": "math"
 }
