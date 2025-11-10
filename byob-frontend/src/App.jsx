@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import Editor from "./pages/editor.pages";
 import Home from "./pages/home.page";
 import SearchPage from "./pages/search.page";
+import PageNotFound from "./pages/404.page";
 
 
 export const UserContext = createContext({})
@@ -35,6 +36,7 @@ const App = () => {
         <Route path="/signup" element={<UserAuthForm key="signup" type="Sign-up" />} />
         <Route path="search/:query" element={<SearchPage />} />
         <Route index element={<Home />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </UserContext.Provider>
   );
