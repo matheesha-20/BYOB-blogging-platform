@@ -36,6 +36,7 @@ const App = () => {
         <Route path="/signup" element={<UserAuthForm key="signup" type="Sign-up" />} />
         <Route path="search/:query" element={<SearchPage />} />
         <Route index element={<Home />} />
+        <Route path="user/:id" element={<AuthorProfile />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </UserContext.Provider>
