@@ -316,6 +316,24 @@ server.post('/search-users', async (req, res) => {
 
 });
 
+server.post('/get-profile', async (req, res) => {
+
+    let { id } = req.body;
+
+    User.findById(id)
+        .select("personal_info.username personal_info.fullname personal_info.profile_img account_info.total_posts account_info.total_likes account_info.total_reads -_id")
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({ "error": "User not found" });
+            }
+            return res.status(200).json({ user });
+        })
+        .catch(err => {
+            return res.status(500).json({ "error": err.message });
+        })
+
+});
+
 server.post('/search-blogs', async (req, res) => {
 
     let { tag, query, page } = req.body;
