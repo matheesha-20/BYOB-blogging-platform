@@ -19,9 +19,9 @@
 #     "password": "Testpassword12345"
 # }
 
-POST http://localhost:3000/search-users
+POST http://localhost:3000/get-profile
 Content-Type: application/json
 
 {
-    "query": "math"
+    "username": "u9037138436"
 }

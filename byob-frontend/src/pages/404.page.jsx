@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const PageNotFound = () => {
     return (
         <div className="bg-white h-cover relative  flex flex-col items-center gap-5 justify-center">
-            <img className="select-none h-[350px] w-auto mx-auto" src={pageNotFoundImg} alt="404 - Page Not Found" />
+            <img className="select-none h-[500px] w-auto mx-auto" src={pageNotFoundImg} alt="404 - Page Not Found" />
             <h1 className="select-none text-4xl font-bold">404 - Page Not Found</h1>
             <p className="select-none p-2 text-center text-lg max-w-xl underline font-bold">
                 <Link to="/">Go back to homepage</Link>
