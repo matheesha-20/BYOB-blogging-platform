@@ -31,7 +31,7 @@ const MinimalBlogPost = ({ content, author, index }) => {
                     <img src={profile_img} alt={username} className="w-10 h-10 rounded-full mr-2" />
                     <div>
                         <p className="text-base font-bold">
-                            <Link to={"/profile/" + username}>
+                            <Link to={`/user/${username}`}>
                                 <span className="text-green-600 text-base align-middle">@</span>
                                 {username}
                             </Link>
