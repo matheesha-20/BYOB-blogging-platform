@@ -11,6 +11,7 @@ import Facebook_icon from "../imgs/facebook.png";
 import Instagram_icon from "../imgs/instagram.png";
 import Website_icon from "../imgs/web.png";
 import { Link } from "react-router-dom";
+import AboutUser from "../components/about.component";
 
 export const profileDataStructure = {
     personal_info: {id: "",
@@ -75,9 +76,7 @@ const ProfilePage = () => {
                             <p className="text-gray-600">@{profile_username}</p>
                         </div>
 
-                        <p className="mt-4 text-gray-800">{bio}</p>
-
-                        <ul className="list-none space-x-5 flex flex-wrap">
+                        <ul className="list-none space-x-5 flex flex-wrap mt-5">
                     {Object.entries(social_links).map(([platform, link]) => (
                         <li key={platform} className="flex items-center">
         
@@ -131,6 +130,8 @@ const ProfilePage = () => {
                     </Link> : " " }
                     
                 </div>
+
+                <AboutUser className=" max-md:hidden" username={profile_username} bio={bio} joinedAt={joinedAt} />
 
             </div>
            }

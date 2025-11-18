@@ -27,7 +27,7 @@ const UserNavigationPanel = () => {
                                         Write
                         </Link>
 
-                        <Link to={`/user/${username}`} className="md:hidden link flex gap-2 text-xl text-slate-600 hover:text-emerald-600 transition">
+                        <Link to={`/user/${username}`} className=" link flex gap-2 text-xl text-slate-600 hover:text-emerald-600 transition">
                                         Profile
                         </Link>
 
@@ -39,7 +39,7 @@ const UserNavigationPanel = () => {
                                         Trending
                         </Link>
 
-                        <Link to="/settings/edit-profile" className="md:hidden link flex gap-2 text-xl text-slate-600 hover:text-emerald-600 transition">
+                        <Link to="/settings/edit-profile" className=" link flex gap-2 text-xl text-slate-600 hover:text-emerald-600 transition">
                                         Settings
                         </Link>
 
