@@ -29,7 +29,7 @@ const HomePage = () => {
                 state: latestBlogs,
                 data: data.blogs,
                 page,
-                countRoute: "/all-latest-blogs/count"
+                countRoute: "/all-latest-blogs-count"
             });
 
             console.log(formatedBlogs);
@@ -63,7 +63,7 @@ const HomePage = () => {
                 state: latestBlogs,
                 data: blogs,
                 page,
-                countRoute: "/search-blogs/count",
+                countRoute: "/search-blogs-count",
                 data_to_send: { tag: pageState }
             });
             setLatestBlogs(formatedBlogs);

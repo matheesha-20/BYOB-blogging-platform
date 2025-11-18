@@ -286,7 +286,7 @@ server.post('/latest-blogs', async (req, res) => {
 
 });
 
-server.post('/all-latest-blogs/count', async (req, res) => {
+server.post('/all-latest-blogs-count', async (req, res) => {
 
     Blog.countDocuments({ draft: false })
     .then(count => {
