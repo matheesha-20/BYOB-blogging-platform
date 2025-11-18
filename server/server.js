@@ -333,7 +333,7 @@ server.post('/get-profile', async (req, res) => {
 
 server.post('/search-blogs', async (req, res) => {
 
-    let { tag, query, page } = req.body;
+    let { tag, query, author, page } = req.body;
 
     let findQuery;
 
@@ -348,6 +348,9 @@ server.post('/search-blogs', async (req, res) => {
 }
     else if (tag) {
         findQuery = { tags: tag, draft: false };
+    }
+      else if (author) {
+        findQuery = { author: author, draft: false };
     }
 
     Blog.find(findQuery)
@@ -366,7 +369,7 @@ server.post('/search-blogs', async (req, res) => {
 });
 
 server.post('/search-blogs-count', async (req, res) => {
-  let { tag, query } = req.body;
+  let { tag, author, query } = req.body;
 
   let findQuery;
 
@@ -375,6 +378,9 @@ server.post('/search-blogs-count', async (req, res) => {
   } else if (query) {
     findQuery = { title: new RegExp(query, "i"), draft: false };
   }
+  else if (author) {
+        findQuery = { author: author, draft: false };
+    }
 
   Blog.countDocuments(findQuery)
     .then(count => {

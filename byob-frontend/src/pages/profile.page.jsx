@@ -12,6 +12,13 @@ import Instagram_icon from "../imgs/instagram.png";
 import Website_icon from "../imgs/web.png";
 import { Link } from "react-router-dom";
 import AboutUser from "../components/about.component";
+import InPageNavigation from "../components/inpage-navigation.component.jsx";
+import BlogPostCard from "../components/blog-post.component.jsx";
+import TrendingBlogPost from "../components/trending-blog-post.component.jsx";
+import NoDataMessage from "../components/nodata.component.jsx";
+import LoadMoreBtn from "../components/load-more.component.jsx";
+import { filterPaginationData } from "../common/filter-pagination-data.jsx";
+import PageNotFound from "./404.page.jsx";
 
 export const profileDataStructure = {
     personal_info: {id: "",
@@ -33,6 +40,8 @@ const ProfilePage = () => {
 
     let [ loading, setLoading ] = useState(true);
 
+    let [ profileLoadeded, setProfileLoaded ] = useState("");
+
     const icons = {
     "youtube": <img src={YouTube_icon} alt="YouTube" className="w-6 h-6 inline-block mr-1" />,
     "twitter": <img src={Twitter_icon} alt="Twitter" className="w-6 h-6 inline-block mr-1" />,
@@ -47,11 +56,19 @@ const ProfilePage = () => {
 
     let { userAuth: {username}} = useContext(UserContext);
 
+    let [Blogs, setBlogs] = useState(null);
+
     const fetchProfileData = async (userId) => {
         axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/get-profile", { username: profileId })
             .then(response => {
                 setLoading(false);
-                setProfile(response.data);
+                if (response.data !== null) {
+                    setProfile(response.data);
+                    fetchBlogsByAuthor({ user_id: response.data._id });
+                }
+                
+                setProfileLoaded(profileId);
+                
                 console.log(response.data);
                 
             })
@@ -60,13 +77,51 @@ const ProfilePage = () => {
             });
     };
 
+        const fetchBlogsByAuthor = ( { page = 1, user_id }) => {
+
+            user_id = user_id == undefined ? Blogs.user_id : user_id;
+
+            axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/search-blogs", { author: user_id, page })
+            .then(async ({ data: { blogs } }) => {
+                let formatedBlogs = await filterPaginationData({
+                    state: Blogs,
+                    data: blogs,
+                    page,
+                    countRoute: "/search-blogs-count",
+                    data_to_send: { author: user_id }
+                });
+
+                formatedBlogs.user_id = user_id;
+
+                setBlogs(formatedBlogs);
+            })
+            .catch(err => {
+                console.log(err.message);
+            })
+        }
+
+        const resetState = () => {
+            setProfileLoaded("");
+        }
+
     useEffect(() => {
-        fetchProfileData(profileId);
-    }, [profileId]);
+
+        if (profileLoadeded != profileId) {
+            setBlogs(null);
+        }
+
+        if (Blogs == null){
+            fetchProfileData(profileId);
+            resetState();
+        }
+
+        
+    }, [profileId, Blogs]);
 
     return (
         <AnimationWrapper>
            { loading ? <Loader /> : 
+                profile_username.length ? 
             <div className="max-w-4xl mx-auto p-5 mt-20 mb-20 bg-white rounded-lg shadow-md">
                 <div className="flex items-start gap-5">
                     <img src={profile_img} alt={`${fullname}'s profile`} className="w-32 h-32 rounded-full object-cover border-4 border-emerald-600" />
@@ -131,9 +186,40 @@ const ProfilePage = () => {
                     
                 </div>
 
-                <AboutUser className=" max-md:hidden" username={profile_username} bio={bio} joinedAt={joinedAt} />
+                    <AboutUser className=" max-md:hidden mt-10" username={profile_username} bio={bio} joinedAt={joinedAt} />
+                       
 
+                        <div className="max-md:mt-12 w-full mt-10">
+
+                            <InPageNavigation routes={[ "Blogs Published", "About"]} defaultHidden={"About"}>
+
+                       <>
+                       {
+                            Blogs == null ? <Loader /> 
+                            :  Blogs.length == 0 ? <NoDataMessage message={"No blogs found !"}/>
+                            :Blogs.results.map((blog, index) => (
+                                <AnimationWrapper transition={{ duration: 1, delay: index*.1}} key={index}>
+
+                                    <BlogPostCard content={blog} author={blog.author.personal_info} />
+
+                                </AnimationWrapper>
+                            ))
+                               
+            
+                        }
+                        <LoadMoreBtn state={Blogs} fetchDataFun={fetchBlogsByAuthor} />
+                        
+                       </>
+                        
+
+                        <AboutUser  username={profile_username} bio={bio} joinedAt={joinedAt} />
+                       
+                       
+                    </InPageNavigation>
+
+                        </div>
             </div>
+            : <PageNotFound />
            }
         </AnimationWrapper>
     );
