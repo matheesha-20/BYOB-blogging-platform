@@ -19,9 +19,9 @@
 #     "password": "Testpassword12345"
 # }
 
-POST http://localhost:3000/get-profile
+POST http://localhost:3000/get-blog
 Content-Type: application/json
 
 {
-    "username": "u9037138436"
+    "blog_id": "-The-Myth-of-the-Perfect-Soulmate-Why-True-Love-Starts-with-a-Builder-Not-a-Findert3UNj2LEnvxjMA-rrHuWH"
 }

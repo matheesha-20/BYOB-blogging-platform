@@ -451,6 +451,32 @@ server.post('/create-blog', verifyJWT, (req, res) => {
 
 })
 
+server.post('/get-blog', async (req, res) => {
+
+    let { blog_id } = req.body;
+    Blog.findOneAndUpdate({ blog_id: blog_id, draft: false } , { $inc: { "activity.total_reads": 1 } })
+    .populate('author', 'personal_info.username personal_info.fullname personal_info.profile_img -_id')
+    .select("title banner content des tags publishedAt -_id activity blog_id")
+    .then(blog => {
+
+      User.findOneAndUpdate(
+        { "personal_info.username": blog.author.personal_info.username },
+        { $inc: { "account_info.total_reads": 1 } }
+      ).catch(err => {
+        console.log("Error updating user's total reads:", err.message);
+      });
+
+        if(!blog){
+            return res.status(404).json({"error": "Blog not found"});
+        }
+        return res.status(200).json({ blog });
+    })
+    .catch(err => {
+        return res.status(500).json({ error: err.message });
+    });
+
+});
+
 server.listen(PORT, '0.0.0.0', () => {
   console.log("Listening on port " + PORT);
 });
