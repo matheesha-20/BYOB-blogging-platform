@@ -5,6 +5,8 @@ import Loader from "../components/loader.component";
 import AnimationWrapper from "../common/page-animation";
 import { Link } from "react-router-dom";
 import BlogInteraction from "../components/blog-interaction.component";
+import BlogPostCard from "../components/blog-post.component.jsx";
+import { set } from "mongoose";
 
 export const blogStructure = {
     title: "",
@@ -18,7 +20,6 @@ export const blogStructure = {
     createdAt: "",
     date: "",
     des: "",
-    tags: [],
     activity: {
         total_likes: 0,
         total_reads: 0,
@@ -36,12 +37,25 @@ const BlogPage = () => {
     let [blogData, setBlogData] = useState(blogStructure);
     let [loading, setLoading] = useState(true);
 
+    const [ similarBlogs, setSimilarBlogs ] = useState([]);
+
     let { title, banner, author:{ personal_info: { profile_img, username: author_username } }, publishedAt, des, tags, content, activity} = blogData;
 
     const fetchBlog = () => {
         axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/get-blog", { blog_id })
         .then(({ data }) => {
+            
             setBlogData(data.blog);
+
+            axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/search-blogs", { tag: data.blog.tags[0], limit: 5, eliminate_blog: blog_id })
+            .then(({ data: { blogs } }) => {
+                setSimilarBlogs(blogs);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+
+            
             setLoading(false);
             
         })
@@ -52,8 +66,15 @@ const BlogPage = () => {
     }
 
     useEffect(() => {
+        resetState();
         fetchBlog();
-    }, []);
+    }, [blog_id]);
+
+    const resetState = () => {
+        setBlogData(blogStructure);
+        setLoading(true);
+        setSimilarBlogs([]);
+    }
 
     return (
         <AnimationWrapper>
@@ -135,10 +156,40 @@ const BlogPage = () => {
                             </p> */}
 
                         </div>
-                    </div>
+
+                        <div className=" mt-5 flex flex-wrap justify-between items-center">
+                             <BlogInteraction />
+                        </div> 
+
+
+            {
+                similarBlogs.length > 0 ?
+                <>
+                 <div className="mt-10">
+                <h3 className="text-xl font-semibold mb-4">Similar Blogs</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {similarBlogs.map((blog, index) => (
+                        // <Link to={`/blog/${blog.blog_id}`} key={index} className="border border-gray-300 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                        //     <img src={blog.banner} alt={blog.title} className="w-full h-40 object-cover" />
+                        //     <p className="p-3">{blog.title}</p>
+                        // </Link>
+
+                        <AnimationWrapper transition={{ duration: 1, delay: index* 0.08}} key={index}>
+                        <BlogPostCard content={blog} author={blog.author.personal_info} key={index} />
+                        </AnimationWrapper>
+
+                    ))}
+                </div>
+            </div>
+             </>
+            : null
+            }
+                   
+                           
+                       
                         
 
-                        
+                       </div>  
                    
                 </div>
             </article>
