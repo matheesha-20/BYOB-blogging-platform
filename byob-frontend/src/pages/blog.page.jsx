@@ -160,14 +160,18 @@ const BlogPage = () => {
                         <div className=" mt-5 flex flex-wrap justify-between items-center">
                              <BlogInteraction />
                         </div> 
+                                            
+                       </div>  
 
-
-            {
+                       
+                   
+                </div>
+                {
                 similarBlogs.length > 0 ?
                 <>
                  <div className="mt-10">
                 <h3 className="text-xl font-semibold mb-4">Similar Blogs</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="gap-4">
                     {similarBlogs.map((blog, index) => (
                         // <Link to={`/blog/${blog.blog_id}`} key={index} className="border border-gray-300 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
                         //     <img src={blog.banner} alt={blog.title} className="w-full h-40 object-cover" />
@@ -184,14 +188,6 @@ const BlogPage = () => {
              </>
             : null
             }
-                   
-                           
-                       
-                        
-
-                       </div>  
-                   
-                </div>
             </article>
                 </div>
                 </BlogContext.Provider>

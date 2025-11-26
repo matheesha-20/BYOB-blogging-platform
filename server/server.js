@@ -276,7 +276,7 @@ server.post('/latest-blogs', async (req, res) => {
 
     let { page } = req.body;
 
-    Blog.find({draft: false}).sort({"publishedAt": -1}).skip(10 * (page - 1)).limit(10).populate('author', 'personal_info.username personal_info.fullname personal_info.profile_img -_id').select("blog_id title banner des tags publishedAt -_id activity.total_likes")
+    Blog.find({draft: false}).sort({"publishedAt": -1}).skip(10 * (page - 1)).limit(10).populate('author', 'personal_info.username personal_info.fullname personal_info.profile_img -_id').select("blog_id title banner des tags publishedAt -_id activity.total_likes activity.total_reads")
     .then(blogs => {
         return res.status(200).json({ blogs });
     })
@@ -357,7 +357,7 @@ server.post('/search-blogs', async (req, res) => {
         .sort({ "activity.total_reads": -1, "activity.total_likes": -1, "publishedAt": -1 })
         .limit(limit ? limit : 20)
         .populate('author', 'personal_info.username personal_info.fullname personal_info.profile_img -_id')
-        .select("blog_id title banner des tags publishedAt -_id activity.total_likes activity.total_reads")
+        .select("blog_id title banner des tags publishedAt activity.total_likes activity.total_reads -_id ")
         .skip(20 * (page - 1))
         .then(blogs => {
             return res.status(200).json({ blogs });
