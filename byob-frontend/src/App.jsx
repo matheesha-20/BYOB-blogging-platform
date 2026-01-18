@@ -10,6 +10,8 @@ import SearchPage from "./pages/search.page";
 import PageNotFound from "./pages/404.page";
 import ProfilePage from "./pages/profile.page";
 import BlogPage from "./pages/blog.page";
+import { matchPath } from "react-router-dom";
+
 
 
 export const UserContext = createContext({})
@@ -25,15 +27,20 @@ const App = () => {
       : setUserAuth({ access_token: null });
   }, []);
 
-  const hideNavbarRoutes = ["/editor"];
-  const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname);
+// Define the patterns that should hide the navbar
+const hideNavbarRoutes = ["/editor", "/editor/:blog_id"];
 
+// Check if the current location matches any of the patterns
+const shouldShowNavbar = !hideNavbarRoutes.some(path => 
+  matchPath({ path, exact: true }, location.pathname)
+);
   return (
     <UserContext.Provider value={{ userAuth, setUserAuth }}>
       {shouldShowNavbar && <Navbar />}
 
       <Routes>
         <Route path="/editor" element={<Editor />} />
+        <Route path="/editor/:blog_id" element={<Editor />} />
         <Route path="/signin" element={<UserAuthForm key="signin" type="Sign-in" />} />
         <Route path="/signup" element={<UserAuthForm key="signup" type="Sign-up" />} />
         <Route path="search/:query" element={<SearchPage />} />

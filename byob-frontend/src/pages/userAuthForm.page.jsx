@@ -207,9 +207,9 @@ const UserAuthForm = ({type}) => {
         </section>
 
         <footer className="bg-slate-800 text-white mt-24">
-        <div className="container mx-auto px-6 py-8 text-center">
+        <div className="container mx-auto px-6 py-8 flex justify-between">
             <p>Created to help aspiring bloggers succeed.</p>
-            <p className="text-sm text-slate-400 mt-2">BYOB Blogging Platform &copy; 2025</p>
+            <p className="text-sm text-slate-400 mt-1">BYOB Blogging Platform &copy; 2025</p>
         </div>
     </footer>
         

@@ -4,8 +4,6 @@ const BlogPostCard = ({ content, author }) => {
 
     let { title, banner, des, tags, publishedAt, activity: { total_likes, total_reads }, blog_id: id } = content;
     let { username, fullname, profile_img } = author;
-
-    console.log(total_reads);
     
 
     return (

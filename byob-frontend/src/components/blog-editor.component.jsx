@@ -12,8 +12,9 @@ import { UserContext } from "../App";
 
 const BlogEditor = () => {
 
-    let {blog, blog:{ title, banner, content, tags, des}, setBlog, textEditor, setTextEditor, setEditorState} = useContext(EditorContext)
+    const { blog, setBlog, textEditor, setTextEditor, setEditorState } = useContext(EditorContext);
 
+    const { title, banner, content, tags, des } = blog || {}; 
 
     let { userAuth: { access_token } } = useContext(UserContext)
 
@@ -164,7 +165,7 @@ const BlogEditor = () => {
             <nav className="container mx-auto px-6 py-5 flex justify-between items-center">
                 <a href="/" className="text-2xl font-bold text-emerald-700"><h1>-__BYOB__-</h1></a>
 
-                <p className="text-center text-2xl font-bold text-emerald-700">_{ title .length ? title : "New Blog"}_</p>
+                <p className="text-center text-2xl font-bold text-emerald-700">_{ title ? title : "New Blog"}_</p>
                 
 
                 <div className="flex space-x-6 items-center">
