@@ -23,11 +23,12 @@ const BlogEditor = () => {
     useEffect(() => {
         setTextEditor(new EditorJS({
             holderId: "blogwriter",
-            data: content,
+            data: content ? { blocks: content } : {},
             tools: tools,
             placeholder: "Let's write Your Awesome Blog!"
         }))
     }, [])
+    
 
     const handleBannerUpload = (e) => {
         e.preventDefault();

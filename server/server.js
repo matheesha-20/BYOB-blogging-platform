@@ -453,15 +453,16 @@ server.post('/create-blog', verifyJWT, (req, res) => {
 
 server.post('/get-blog', async (req, res) => {
 
-    let { blog_id } = req.body;
-    Blog.findOneAndUpdate({ blog_id: blog_id, draft: false } , { $inc: { "activity.total_reads": 1 } })
+    let { blog_id, draft, mode } = req.body;
+    
+    Blog.findOneAndUpdate({ blog_id: blog_id, draft: false } , { $inc: { "activity.total_reads": mode === "edit" ? 0 : 1 } })
     .populate('author', 'personal_info.username personal_info.fullname personal_info.profile_img -_id')
     .select("title banner content des tags publishedAt -_id activity blog_id")
     .then(blog => {
 
       User.findOneAndUpdate(
         { "personal_info.username": blog.author.personal_info.username },
-        { $inc: { "account_info.total_reads": 1 } }
+        { $inc: { "account_info.total_reads": mode === "edit" ? 0 : 1 } }
       ).catch(err => {
         console.log("Error updating user's total reads:", err.message);
       });
@@ -469,6 +470,11 @@ server.post('/get-blog', async (req, res) => {
         if(!blog){
             return res.status(404).json({"error": "Blog not found"});
         }
+
+        if (blog.draft && !draft) {
+            return res.status(500).json({ "error": "You are not authorized to view this draft blog" });
+        }
+
         return res.status(200).json({ blog });
     })
     .catch(err => {
